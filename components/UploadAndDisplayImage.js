@@ -10,6 +10,7 @@ const UploadAndDisplayImage = () => {
     const data = new FormData();
     data.set("file", file);
     const res = await fetch("http://localhost:3000/api/upload-image", {
+      mode: 'cors',
       method: "POST",
       body: data,
     });
