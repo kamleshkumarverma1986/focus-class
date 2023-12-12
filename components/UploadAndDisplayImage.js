@@ -8,7 +8,7 @@ const UploadAndDisplayImage = () => {
   const onSubmitHandler = async (e) => {
     e.preventDefault();
     const data = new FormData();
-    data.set("file", file);
+    data.append("file", file);
     const res = await fetch("http://localhost:3000/api/upload-image", {
       mode: 'cors',
       method: "POST",
