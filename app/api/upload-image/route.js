@@ -12,7 +12,7 @@ export const POST = async (req, res) => {
     const byteData = await file.arrayBuffer();
     const buffer = Buffer.from(byteData);
     const fileSplitted = file.name.split(".");
-    const path = `uploaded-images/${Date.now()}.${fileSplitted[fileSplitted.length - 1]}`;
-    await writeFile(`./public/${path}`, buffer);
-    return NextResponse.json({ message: "image uploaded", success: true, url: `/${path}` });
+    const fileName = `${Date.now()}.${fileSplitted[fileSplitted.length - 1]}`;
+    await writeFile(`./.next/static/media/${fileName}`, buffer);
+    return NextResponse.json({ message: "image uploaded", success: true, url: `/${fileName}` });
 };
