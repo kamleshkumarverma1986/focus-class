@@ -1,30 +1,144 @@
-"use client"
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
+import Image from "next/image";
 
-const UploadAndDisplayImage = () => {
-  const [file, setFile] = useState(null);
+const UploadAndDisplayImage = ({ onSuccessUpload, isMultiple = true, children }) => {
+  const [loading, setLoading] = useState(false);
+  const [visibility, setVisibility] = useState(false);
 
-  const onSubmitHandler = async (e) => {
-    e.preventDefault();
-    const data = new FormData();
-    data.append("file", file);
-    const res = await fetch("http://localhost:3000/api/upload-image", {
-      mode: 'cors',
-      method: "POST",
-      body: data,
+  const [fileList, setFileList] = useState(null);
+
+  const modalCloseHandler = () => {
+    setVisibility(false);
+    setFileList(null);
+  };
+
+  const uploadImage = async (imageData, fileType) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const res = await fetch(
+          `https://api.cloudinary.com/v1_1/drwcm1tej/${fileType.includes("image") ? "image" : "video"
+          }/upload`,
+          {
+            method: "POST",
+            body: imageData,
+          }
+        );
+        const response = await res.json();
+        resolve(response);
+      } catch (error) {
+        reject(error);
+      }
     });
-    const resData = await res.json();
-    console.log("resData ", resData);
-  }
+  };
+
+  const onImageUploadHandler = async (e) => {
+    if (!fileList || !files.length) {
+      return;
+    }
+    const allImagePromises = [];
+    setLoading(true);
+    files.forEach((file, i) => {
+      const imageData = new FormData();
+
+      imageData.append("file", file);
+      imageData.append("upload_preset", "ravi_raushan_ka_apna_facebook");
+      imageData.append("cloud_name", "drwcm1tej");
+      allImagePromises.push(uploadImage(imageData, file.type));
+    });
+    Promise.all(allImagePromises)
+      .then(async (medias) => {
+        setLoading(false);
+        setVisibility(false);
+        setFileList(null);
+        const mainMedia = medias.map((media) => {
+          return {
+            url: media.url,
+          };
+        });
+        onSuccessUpload(mainMedia);
+      })
+      .catch((error) => {
+        console.log("There is some error while uploading media", error);
+        setLoading(false);
+      });
+  };
+
+  // 👇 files is not an array, but it's iterable, spread to get an array of files
+  const files = fileList ? [...fileList] : [];
 
   return (
-    <form onSubmit={onSubmitHandler}>
-      <input type="file" onChange={(e) => {
-        setFile(e.target.files[0])
-      }} />
-      <button type="submit">Upload Image on server</button>
-    </form>
+    <section>
+      <div
+        onClick={() => {
+          setVisibility(true);
+        }}
+      >
+        {children}
+      </div>
+
+      <section
+        className="d-flex justify-content-center"
+        style={{ minHeight: "50px" }}
+      >
+        <input
+          style={{ display: "none" }}
+          className="fileInput"
+          id="selectedFile"
+          type="file"
+          multiple={isMultiple}
+          onChange={(e) => {
+            setFileList(e.target.files);
+          }}
+        />
+        <button
+          className="btn btn-primary btn-lg"
+          onClick={(e) => {
+            document.getElementById("selectedFile").click();
+          }}
+        >
+          <i className="fa-solid fa-camera"></i> Click here to upload images
+        </button>
+      </section>
+      {!!files.length && (
+        <div>
+          <section className="uploading-image-section">
+            {files.map((file, index) => (
+              <Image
+                key={index}
+                className="uploading-image"
+                src={URL.createObjectURL(file)}
+                alt="uploading-pic"
+                width={500}
+                height={500}
+              />
+            ))}
+          </section>
+          <div className="d-flex justify-content-center">
+            <button
+              className="btn btn-primary"
+              type="button"
+              disabled={loading}
+              onClick={onImageUploadHandler}
+            >
+              {loading ? (
+                <span>
+                  <span
+                    className="spinner-border spinner-border-sm"
+                    role="status"
+                    aria-hidden="true"
+                  ></span>
+                  Loading...
+                </span>
+              ) : (
+                <span>Upload Image on server</span>
+              )}
+            </button>
+          </div>
+        </div>
+      )}
+    </section>
   );
 };
 
