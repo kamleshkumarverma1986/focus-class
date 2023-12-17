@@ -43,7 +43,7 @@ function Header() {
     return (
         <AppBar position="fixed">
             <Container maxWidth="xl">
-                <Toolbar disableGutters>
+                <Toolbar variant="dense">
                     <Typography
                         variant="h6"
                         noWrap
@@ -114,14 +114,14 @@ function Header() {
                             textDecoration: 'none',
                         }}
                     >
-                        <Logo />
+                        <Box onClick={() => router.push('/')}><Logo /></Box>
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
                             <Link key={page.route} style={{ textDecoration: "none" }} href={page.route}>
                                 <Button
                                     onClick={handleCloseNavMenu}
-                                    sx={{ my: 2, color: 'white', display: 'block' }}
+                                    sx={{ color: 'white', display: 'block' }}
                                 >
                                     {page.title}
                                 </Button>

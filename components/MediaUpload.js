@@ -3,16 +3,10 @@
 import { useState } from "react";
 import Image from "next/image";
 
-const UploadAndDisplayImage = ({ onSuccessUpload, isMultiple = true, children }) => {
+const MediaUpload = ({ onSuccessUpload, isMultiple = true, children }) => {
   const [loading, setLoading] = useState(false);
-  const [visibility, setVisibility] = useState(false);
-
   const [fileList, setFileList] = useState(null);
 
-  const modalCloseHandler = () => {
-    setVisibility(false);
-    setFileList(null);
-  };
 
   const uploadImage = async (imageData, fileType) => {
     return new Promise(async (resolve, reject) => {
@@ -50,7 +44,6 @@ const UploadAndDisplayImage = ({ onSuccessUpload, isMultiple = true, children })
     Promise.all(allImagePromises)
       .then(async (medias) => {
         setLoading(false);
-        setVisibility(false);
         setFileList(null);
         const mainMedia = medias.map((media) => {
           return {
@@ -70,11 +63,7 @@ const UploadAndDisplayImage = ({ onSuccessUpload, isMultiple = true, children })
 
   return (
     <section>
-      <div
-        onClick={() => {
-          setVisibility(true);
-        }}
-      >
+      <div>
         {children}
       </div>
 
@@ -142,4 +131,4 @@ const UploadAndDisplayImage = ({ onSuccessUpload, isMultiple = true, children })
   );
 };
 
-export default UploadAndDisplayImage;
+export default MediaUpload;

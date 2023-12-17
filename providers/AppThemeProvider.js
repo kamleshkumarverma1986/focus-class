@@ -25,8 +25,7 @@ export const AppThemeProvider = props => {
     const colorMode = useMemo(() => ({
         toggleThemeMode: () => {
             setMode(prevMode => {
-                const newColorMode = prevMode === 'light' ? 'dark' : 'light';
-                return newColorMode;
+                return prevMode === 'light' ? 'dark' : 'light';
             });
         }
     }), []);
