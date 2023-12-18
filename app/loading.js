@@ -1,9 +1,7 @@
-
-
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
-const Loading = () => {
+export default function Loading() {
     return (
         <Backdrop
             sx={{
@@ -15,6 +13,4 @@ const Loading = () => {
             <CircularProgress color="inherit" />
         </Backdrop>
     );
-};
-
-export default Loading;
+}

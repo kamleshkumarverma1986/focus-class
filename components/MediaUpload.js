@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 
-const MediaUpload = ({ onSuccessUpload, isMultiple = true, children }) => {
+export default function MediaUpload({ onSuccessUpload, isMultiple = true, children }) {
   const [loading, setLoading] = useState(false);
   const [fileList, setFileList] = useState(null);
 
@@ -129,6 +129,4 @@ const MediaUpload = ({ onSuccessUpload, isMultiple = true, children }) => {
       )}
     </section>
   );
-};
-
-export default MediaUpload;
+}

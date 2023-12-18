@@ -17,15 +17,9 @@ import { useRouter } from 'next/navigation';
 import { ThemeModeContext } from '@/providers/AppThemeProvider';
 import { ThemeSwitch } from '@/utils/StyledComponents';
 
-const pages = [{
-    title: "About",
-    route: "/about"
-}, {
-    title: "Contact",
-    route: "/contact"
-}];
+const pages = [];
 
-function Header() {
+export default function Header() {
     const router = useRouter()
 
     const themeMode = React.useContext(ThemeModeContext);
@@ -138,4 +132,3 @@ function Header() {
         </AppBar>
     );
 }
-export default Header;

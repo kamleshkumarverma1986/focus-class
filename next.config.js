@@ -1,10 +1,4 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-    images: {
-        domains: ["www.focusclass.in/"],
-    },
-    output: "standalone",
-    reactStrictMode: false,
-}
+const nextConfig = {}
 
 module.exports = nextConfig
