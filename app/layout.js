@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <AppThemeProvider >
           <Header />
-          <main style={{marginTop: "50px"}}>{children}</main>
+          <main style={{marginTop: "50px", marginBottom: "50px"}}>{children}</main>
           <Footer></Footer>
         </AppThemeProvider>
       </body>

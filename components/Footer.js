@@ -7,7 +7,8 @@ export default function Footer() {
             width: '100%',
             position: 'fixed',
             bottom: 0,
-            width: '100%'
+            width: '100%',
+            zIndex: 9999,
         }} square variant="outlined">
             <Container maxWidth="lg">
                 <Box

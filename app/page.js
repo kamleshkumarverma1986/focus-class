@@ -4,6 +4,8 @@ import topImg2 from "../public/images/top-img2.jpeg";
 import topImg3 from "../public/images/top-img3.jpeg";
 import MarqueeWidget from "@/components/MarqueeWidget";
 import CardContainer from "@/components/CardContainer";
+import EnquiryForm from "@/components/EnquiryForm";
+import WidgetContainer from "@/components/WidgetContainer";
 
 export default function Home() {
   const imageList = [
@@ -15,8 +17,15 @@ export default function Home() {
   return (
       <main>
         <CarouselWidget imageList={imageList}/>
-        <MarqueeWidget />
-        <CardContainer />
+        <WidgetContainer>
+          <EnquiryForm />
+        </WidgetContainer>
+        <WidgetContainer>
+          <CardContainer />
+        </WidgetContainer>
+        <WidgetContainer>
+          <MarqueeWidget />
+        </WidgetContainer>
       </main>
   )
 }
