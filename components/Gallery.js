@@ -62,24 +62,24 @@ export default function Gallery() {
         <Typography variant="h3" sx={{textAlign: "center"}}>
             Our Gallery
         </Typography>
-      <ImageList variant="masonry" cols={3} gap={8}>
-        {itemData.map((item) => (
-          <ImageListItem key={item.img}>
-            <Image
-              src={`${item.img}?w=248&fit=crop&auto=format`}
-              alt={item.title}
-              sizes="100vw"
-              height={500}
-              width={0}
-                // Make the image display full width
-                style={{
-                    width: '100%',
-                    height: 'auto',
-                }}
-            />
-          </ImageListItem>
-        ))}
-      </ImageList>
+        <ImageList variant="masonry" cols={3} gap={8}>
+            {itemData.map((item) => (
+            <ImageListItem key={item.img}>
+                <Image
+                    src={`${item.img}`}
+                    alt={item.title}
+                    sizes="100vw"
+                    height={500}
+                    width={0}
+                        // Make the image display full width
+                        style={{
+                            width: '100%',
+                            height: 'auto',
+                        }}
+                    />
+            </ImageListItem>
+            ))}
+        </ImageList>
     </Box>
   );
 }

@@ -6,6 +6,7 @@ import { Inter } from 'next/font/google';
 import { AppThemeProvider } from "@/providers/AppThemeProvider";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { connectToDB } from "@/utils/database";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -14,7 +15,10 @@ export const metadata = {
   description: 'Best Coaching in Jabalpur',
 }
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  // Connecting the mongodb on the first page load
+  await connectToDB();
+
   return (
     <html lang="en">
       <body className={inter.className}>

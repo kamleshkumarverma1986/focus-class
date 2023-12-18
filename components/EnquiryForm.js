@@ -4,19 +4,36 @@ import * as React from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import Button from "@mui/material/Button";
 import Container from '@mui/material/Container';
+import { addEnquiry } from "@/actions/addEnquiry";
+import { FormSubmitButton } from "./FormSubmitButton";
+import DialogBox from "./DialogBox";
 
 export default function EnquiryForm() {
-  const [selectedCourse, setSelectedCourse] = React.useState("");
+  const formRef = React.useRef(null);
 
-  const courses = ["10th", "11th"];
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  const [selectedClass, setSelectedClass] = React.useState("");
+  const [selectedBoard, setSelectedBoard] = React.useState("");
+  const [selectedGoal, setSelectedGoal] = React.useState("");
+
+  const classes = ["8th", "9th", "10th", "11th", "12th", "Other"];
+  const boards = ["CBSE", "Other"];
+  const goals = [
+    "8th",
+    "9th",
+    "10th (NTSE)",
+    "11th (JEE or NEET)",
+    "12th (JEE or NEET)",
+    "Dropper (JEE or NEET)",
+    "Medical or Engineering",
+  ];
 
   return (
     <Container>
@@ -24,100 +41,150 @@ export default function EnquiryForm() {
             <Typography variant="h4" sx={{marginBottom: "10px"}}>
                 Enquiry Form
             </Typography>
-            <Grid container spacing={6}>
-                <Grid item xs={12} md={6}>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                            <TextField
-                                required
-                                id="fullName"
-                                name="fullName"
-                                label="Full Name"
-                                fullWidth
-                                size="small"
-                                autoComplete="off"
-                                variant="standard"
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                required
-                                id="email"
-                                name="email"
-                                label="Email"
-                                type="email"
-                                fullWidth
-                                size="small"
-                                autoComplete="off"
-                                variant="standard"
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                required
-                                id="schoolName"
-                                name="schoolName"
-                                label="School Name"
-                                fullWidth
-                                size="small"
-                                autoComplete="off"
-                                variant="standard"
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Button size="large" variant="outlined">Submit</Button>
+            <form ref={formRef} action={async (formData) => {
+                await addEnquiry(formData);
+                formRef?.current?.reset();
+                setSelectedClass("")
+                setSelectedBoard("");
+                setSelectedGoal("");
+                setIsOpen(true);
+            }}>
+                <Grid container spacing={2}>
+                    <Grid item xs={12} md={6}>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12}>
+                                <TextField
+                                    required
+                                    name="fullName"
+                                    label="Full Name"
+                                    fullWidth
+                                    size="small"
+                                    autoComplete="off"
+                                    variant="standard"
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    required
+                                    name="mobileNumber"
+                                    label="Mobile Number"
+                                    fullWidth
+                                    size="small"
+                                    autoComplete="off"
+                                    variant="standard"
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    required
+                                    name="email"
+                                    label="Email ID"
+                                    type="email"
+                                    fullWidth
+                                    size="small"
+                                    autoComplete="off"
+                                    variant="standard"
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    required
+                                    name="address"
+                                    label="Address"
+                                    fullWidth
+                                    size="small"
+                                    autoComplete="off"
+                                    variant="standard"
+                                    multiline
+                                />
+                            </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12}>
-                            <TextField
-                                required
-                                id="mobileNumber"
-                                name="mobileNumber"
-                                label="Mobile Number"
-                                fullWidth
-                                size="small"
-                                autoComplete="off"
-                                variant="standard"
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                required
-                                id="address"
-                                name="address"
-                                label="Address"
-                                fullWidth
-                                size="small"
-                                autoComplete="off"
-                                variant="standard"
-                                multiline
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <FormControl fullWidth size="small" variant="standard">
-                                <InputLabel id="demo-simple-select-label">Course</InputLabel>
-                                <Select
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    value={selectedCourse}
-                                    label="Select Course"
-                                    onChange={(e) => {
-                                        setSelectedCourse(e.target.value);
-                                    }}
+                    <Grid item xs={12} md={6}>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12}>
+                                <TextField
+                                    required
+                                    name="schoolName"
+                                    label="School Name"
+                                    fullWidth
+                                    size="small"
+                                    autoComplete="off"
+                                    variant="standard"
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <FormControl fullWidth size="small" variant="standard">
+                                    <InputLabel id="currentClassId">Current Class</InputLabel>
+                                    <Select
+                                        labelId="currentClassId"
+                                        name="currentClass"
+                                        label="Current Class"
+                                        value={selectedClass}
+                                        onChange={(e) => setSelectedClass(e.target.value)}
+                                        required
                                     >
-                                    {courses.map((course, index) => (
-                                        <MenuItem key={index} value={course}>{course}</MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
+                                        <MenuItem value={""}>Select Option</MenuItem>
+                                        {classes.map((className, index) => (
+                                            <MenuItem key={index} value={className}>{className}</MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <FormControl fullWidth size="small" variant="standard">
+                                    <InputLabel id="currentBoardId">Current Board</InputLabel>
+                                    <Select
+                                        labelId="currentBoardId"
+                                        name="currentBoard"
+                                        label="Current Board"
+                                        value={selectedBoard}
+                                        onChange={(e) => setSelectedBoard(e.target.value)}
+                                        required
+                                     >
+                                        <MenuItem value={""}>Select Option</MenuItem>
+                                        {boards.map((board, index) => (
+                                            <MenuItem key={index} value={board}>{board}</MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <FormControl fullWidth size="small" variant="standard">
+                                    <InputLabel id="goalId">Goal</InputLabel>
+                                    <Select
+                                        labelId="goalId"
+                                        name="goal"
+                                        label="Goal"
+                                        value={selectedGoal}
+                                        onChange={(e) => setSelectedGoal(e.target.value)}
+                                        required
+                                    >
+                                        <MenuItem value={""}>Select Option</MenuItem>
+                                        {goals.map((goal, index) => (
+                                            <MenuItem key={index} value={goal}>{goal}</MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <Grid container spacing={3}>
+                            <Grid item xs={12}>
+                                <FormSubmitButton />
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Grid>
-            </Grid>
+            </form>
         </Paper>
+        <DialogBox
+            isOpen={isOpen}
+            handleClose={() => setIsOpen(false)}
+            dialogTitle="Thanks for your enquiry!"
+            dialogContentText="Thank you for your message. Our team will get back to you soon."
+        />
     </Container>
   );
 }
