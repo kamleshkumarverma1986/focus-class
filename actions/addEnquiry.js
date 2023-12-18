@@ -1,11 +1,13 @@
 "use server"
 
 import EnquiryUser from "@/models/enquiryUser";
+import { connectToDB } from "@/utils/database";
 
 export const addEnquiry = async (prevState, formData) => {
     try {
         console.log("prevState ", prevState);
-        EnquiryUser.create({
+        await connectToDB();
+        await EnquiryUser.create({
             fullName: formData.get("fullName"),
             mobileNumber: formData.get("mobileNumber"),
             email: formData.get("email"),
