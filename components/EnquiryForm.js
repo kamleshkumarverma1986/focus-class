@@ -10,12 +10,21 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Container from '@mui/material/Container';
-import { addEnquiry } from "@/actions/addEnquiry";
-import { FormSubmitButton } from "./FormSubmitButton";
+import Button from "@mui/material/Button";
 import DialogBox from "./DialogBox";
+import { useFormState } from "react-dom";
+import { addEnquiry } from "@/actions/addEnquiry";
+import SendIcon from '@mui/icons-material/Send';
+
+const initialState = {
+    message: null,
+}
 
 export default function EnquiryForm() {
   const formRef = React.useRef(null);
+  const [state, formAction] = useFormState(addEnquiry, initialState);
+
+  console.log("state ", state);
 
   const [isOpen, setIsOpen] = React.useState(false);
 
@@ -42,7 +51,7 @@ export default function EnquiryForm() {
                 Enquiry Form
             </Typography>
             <form ref={formRef} action={async (formData) => {
-                await addEnquiry(formData);
+                await formAction(formData);
                 formRef?.current?.reset();
                 setSelectedClass("")
                 setSelectedBoard("");
@@ -172,7 +181,9 @@ export default function EnquiryForm() {
                     <Grid item xs={12} md={6}>
                         <Grid container spacing={3}>
                             <Grid item xs={12}>
-                                <FormSubmitButton />
+                            <Button type="submit" size="large" variant="outlined" endIcon={<SendIcon />}>
+                                Submit
+                            </Button>
                             </Grid>
                         </Grid>
                     </Grid>
