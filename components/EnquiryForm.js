@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { useState } from "react";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
@@ -11,7 +10,6 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
-import UploadFileIcon from "@mui/icons-material/UploadFile";
 import Button from "@mui/material/Button";
 import Container from '@mui/material/Container';
 
@@ -23,7 +21,7 @@ export default function EnquiryForm() {
   return (
     <Container>
         <Paper square variant="outlined" sx={{padding: {xs: "20px", md: "30px"}}}>
-            <Typography variant="h4">
+            <Typography variant="h4" sx={{marginBottom: "10px"}}>
                 Enquiry Form
             </Typography>
             <Grid container spacing={6}>
@@ -65,6 +63,9 @@ export default function EnquiryForm() {
                                 autoComplete="off"
                                 variant="standard"
                             />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Button size="large" variant="outlined">Submit</Button>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -112,9 +113,6 @@ export default function EnquiryForm() {
                                     ))}
                                 </Select>
                             </FormControl>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Button size="large" variant="outlined">Submit</Button>
                         </Grid>
                     </Grid>
                 </Grid>

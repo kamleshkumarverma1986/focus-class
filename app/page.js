@@ -6,6 +6,7 @@ import MarqueeWidget from "@/components/MarqueeWidget";
 import CardContainer from "@/components/CardContainer";
 import EnquiryForm from "@/components/EnquiryForm";
 import WidgetContainer from "@/components/WidgetContainer";
+import Gallery from "@/components/Gallery";
 
 export default function Home() {
   const imageList = [
@@ -25,6 +26,9 @@ export default function Home() {
         </WidgetContainer>
         <WidgetContainer>
           <MarqueeWidget />
+        </WidgetContainer>
+        <WidgetContainer>
+          <Gallery />
         </WidgetContainer>
       </main>
   )
