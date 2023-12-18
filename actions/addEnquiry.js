@@ -5,7 +5,7 @@ import EnquiryUser from "@/models/enquiryUser";
 export const addEnquiry = async (prevState, formData) => {
     try {
         console.log("prevState ", prevState);
-        await EnquiryUser.create({
+        EnquiryUser.create({
             fullName: formData.get("fullName"),
             mobileNumber: formData.get("mobileNumber"),
             email: formData.get("email"),
