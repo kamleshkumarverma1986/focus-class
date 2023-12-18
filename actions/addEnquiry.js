@@ -5,7 +5,6 @@ import { connectToDB } from "@/utils/database";
 
 export const addEnquiry = async (prevState, formData) => {
     try {
-        console.log("prevState ", prevState);
         await connectToDB();
         await EnquiryUser.create({
             fullName: formData.get("fullName"),
@@ -17,9 +16,9 @@ export const addEnquiry = async (prevState, formData) => {
             currentBoard: formData.get("currentBoard"),
             goal: formData.get("goal"),
         });
-        return {message: "Data is successfully saved", status: 200}
+        return true;
     } catch (error) {
         console.log("there is some error while saving EnquiryUser");
-        return {message: "there is some error while saving EnquiryUser", status: 500, error}
+        return false;
     }
 }

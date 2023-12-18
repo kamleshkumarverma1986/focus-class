@@ -10,27 +10,25 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Container from '@mui/material/Container';
-import Button from "@mui/material/Button";
 import DialogBox from "./DialogBox";
 import { useFormState } from "react-dom";
 import { addEnquiry } from "@/actions/addEnquiry";
-import SendIcon from '@mui/icons-material/Send';
-
-const initialState = {
-    message: null,
-}
+import FormSubmitButton from "./FormSubmitButton";
 
 export default function EnquiryForm() {
   const formRef = React.useRef(null);
-  const [state, formAction] = useFormState(addEnquiry, initialState);
-
-  console.log("state ", state);
-
+  const [state, formAction] = useFormState(addEnquiry, null);
   const [isOpen, setIsOpen] = React.useState(false);
 
   const [selectedClass, setSelectedClass] = React.useState("");
   const [selectedBoard, setSelectedBoard] = React.useState("");
   const [selectedGoal, setSelectedGoal] = React.useState("");
+
+  React.useEffect(() => {
+    if (state) {
+        setIsOpen(true);
+    }
+  }, [state]);
 
   const classes = ["8th", "9th", "10th", "11th", "12th", "Other"];
   const boards = ["CBSE", "Other"];
@@ -56,7 +54,6 @@ export default function EnquiryForm() {
                 setSelectedClass("")
                 setSelectedBoard("");
                 setSelectedGoal("");
-                setIsOpen(true);
             }}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} md={6}>
@@ -181,9 +178,7 @@ export default function EnquiryForm() {
                     <Grid item xs={12} md={6}>
                         <Grid container spacing={3}>
                             <Grid item xs={12}>
-                            <Button type="submit" size="large" variant="outlined" endIcon={<SendIcon />}>
-                                Submit
-                            </Button>
+                                <FormSubmitButton />
                             </Grid>
                         </Grid>
                     </Grid>
