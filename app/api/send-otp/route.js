@@ -12,9 +12,10 @@ export async function POST(req, res) {
         const admin = await Admin.findOne({ mobileNumber });
 
         if (!admin) {
-          return NextResponse.json({}, {
-            status: 400,
-            statusText: "You are not a Admin!"
+          return NextResponse.json({
+            message: "You are not a Admin!",
+          }, {
+            status: 401,
           });
         }
 
@@ -36,16 +37,17 @@ export async function POST(req, res) {
         clearTimeout(otpTimeoutIdForAdminLogin);
         otpTimeoutIdForAdminLogin = invalidateOTP(admin);
 
-        return NextResponse.json({}, {
+        return NextResponse.json({
+          message: "OTP is successfully sent!",
+        }, {
           status: 200,
-          statusText: "OTP is successfully sent!"
         });
       } catch (error) {
         return NextResponse.json({
-          error: error.message
+          error: error.message,
+          message: "Something went wrong!"
         }, {
           status: 500,
-          statusText: "Something went wrong!"
         });
       }
 }
