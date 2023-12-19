@@ -10,25 +10,18 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Container from '@mui/material/Container';
-import DialogBox from "./DialogBox";
-import { useFormState } from "react-dom";
 import { addEnquiry } from "@/actions/addEnquiry";
 import FormSubmitButton from "./FormSubmitButton";
+import AlertBox from "./AlertBox";
 
 export default function EnquiryForm() {
   const formRef = React.useRef(null);
-  const [state, formAction] = useFormState(addEnquiry, null);
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isAlertOpen, setIsAlertOpen] = React.useState(false);
+  const [alertProps, setAlertProps] = React.useState(null);
 
   const [selectedClass, setSelectedClass] = React.useState("");
   const [selectedBoard, setSelectedBoard] = React.useState("");
   const [selectedGoal, setSelectedGoal] = React.useState("");
-
-  React.useEffect(() => {
-    if (state) {
-        setIsOpen(true);
-    }
-  }, [state]);
 
   const classes = ["8th", "9th", "10th", "11th", "12th", "Other"];
   const boards = ["CBSE", "Other"];
@@ -42,19 +35,29 @@ export default function EnquiryForm() {
     "Medical or Engineering",
   ];
 
+  const formReset = () => {
+    formRef?.current?.reset();
+    setSelectedClass("")
+    setSelectedBoard("");
+    setSelectedGoal("");
+  }
+
+  const formSubmitAction = async (formData) => {
+    const state = await addEnquiry(formData);
+    setAlertProps(state);
+    setIsAlertOpen(true);
+    if (state?.isSuccess) {
+        formReset();
+    }
+  }
+
   return (
     <Container>
         <Paper square variant="outlined" sx={{padding: {xs: "20px", md: "30px"}}}>
             <Typography variant="h4" sx={{marginBottom: "10px"}}>
                 Enquiry Form
             </Typography>
-            <form ref={formRef} action={async (formData) => {
-                await formAction(formData);
-                formRef?.current?.reset();
-                setSelectedClass("")
-                setSelectedBoard("");
-                setSelectedGoal("");
-            }}>
+            <form ref={formRef} action={formSubmitAction}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} md={6}>
                         <Grid container spacing={3}>
@@ -185,11 +188,10 @@ export default function EnquiryForm() {
                 </Grid>
             </form>
         </Paper>
-        <DialogBox
-            isOpen={isOpen}
-            handleClose={() => setIsOpen(false)}
-            dialogTitle="Thanks for your enquiry!"
-            dialogContentText="Thank you for your message. Our team will get back to you soon."
+        <AlertBox
+            isOpen={isAlertOpen}
+            handleClose={() => setIsAlertOpen(false)}
+            {...alertProps}
         />
     </Container>
   );

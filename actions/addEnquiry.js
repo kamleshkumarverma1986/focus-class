@@ -3,7 +3,7 @@
 import EnquiryUser from "@/models/enquiryUser";
 import { connectToDB } from "@/utils/database";
 
-export const addEnquiry = async (prevState, formData) => {
+export const addEnquiry = async (formData) => {
     try {
         await connectToDB();
         await EnquiryUser.create({
@@ -16,9 +16,15 @@ export const addEnquiry = async (prevState, formData) => {
             currentBoard: formData.get("currentBoard"),
             goal: formData.get("goal"),
         });
-        return true;
+        return {
+            isSuccess: true,
+            message: "Thank you for your inquiry. Our team will get back to you soon.",
+        };
     } catch (error) {
-        console.log("there is some error while saving EnquiryUser");
-        return false;
+        console.log("Error: ", error);
+        return {
+            isSuccess: false,
+            message: "Something went wrong",
+        };
     }
 }
