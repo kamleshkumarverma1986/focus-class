@@ -21,6 +21,7 @@ export async function POST(req, res) {
 
         // Now we will send the OTP in mobile number
         const otp = generateOTP();
+        console.log("otp sent ==> ", otp);
         await sendSMS({
           otp,
           mobileNumbers: [Number(mobileNumber)],

@@ -8,10 +8,12 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import Copyright from './Copyright';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useFetch } from '@/hooks/useFetch';
-import AlertBox from "./AlertBox";
+import { signIn } from "next-auth/react";
+import Copyright from '@/components/Copyright';
+import AlertBox from '@/components/AlertBox';
+import { useRouter } from 'next/navigation';
 
 const initialFormData = {
     mobileNumber: "",
@@ -19,6 +21,7 @@ const initialFormData = {
 }
 
 export default function AdminLogin() {
+    const router = useRouter();
     const [isAlertOpen, setIsAlertOpen] = React.useState(false);
     const [alertProps, setAlertProps] = React.useState(null);
 
@@ -48,15 +51,32 @@ export default function AdminLogin() {
         });
     }
 
-    const handleLoginSubmit = (event) => {
+    const handleLoginSubmit = async (event) => {
         event.preventDefault();
         if (!isOtpSent) {
             sendOtpToMobileNumber();
         } else {
-            adminLogin({
-                method: "POST",
-                body: JSON.stringify(formData)
-            });
+            try {
+                const res = await signIn("credentials", {
+                    ...formData,
+                    redirect: false,
+                });
+                if (!res.ok) {
+                    setIsAlertOpen(true);
+                    setAlertProps({
+                        isSuccess: false,
+                        message: "Invalid Credentials!"
+                    });
+                    return;
+                }
+                router.replace('admin-dashboard');
+            } catch (error) {
+                setIsAlertOpen(true);
+                setAlertProps({
+                    isSuccess: false,
+                    message: error.message,
+                });
+            }
         }
     };
 
