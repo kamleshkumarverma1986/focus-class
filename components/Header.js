@@ -16,11 +16,21 @@ import Logo from './Logo';
 import { useRouter } from 'next/navigation';
 import { ThemeModeContext } from '@/providers/AppThemeProvider';
 import { ThemeSwitch } from '@/utils/StyledComponents';
+import { useSession } from "next-auth/react";
+import { signOut } from 'next-auth/react';
 
-const pages = [];
+const pages = [{
+    title: "Edit Home Page",
+    route: "/admin-dashboard/edit-home-page"
+}, {
+    title: "Enquiries",
+    route: "/admin-dashboard/enquiries"
+}];
 
 export default function Header() {
-    const router = useRouter()
+    const router = useRouter();
+
+    const { status } = useSession();
 
     const themeMode = React.useContext(ThemeModeContext);
 
@@ -52,7 +62,11 @@ export default function Header() {
                             textDecoration: 'none',
                         }}
                     >
-                        <Box onClick={() => router.push('/')}><Logo /></Box>
+                        <Box
+                            onClick={() => router.push(status === "authenticated" ? "/admin-dashboard" : "/")}
+                        >
+                            <Logo />
+                        </Box>
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -84,7 +98,7 @@ export default function Header() {
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            {pages.map((page) => (
+                            {status === "authenticated" && pages.map((page) => (
                                 <MenuItem key={page.route} onClick={handleCloseNavMenu}>
                                     <Typography textAlign="center">
                                         <Link style={{ textDecoration: "none" }} href={page.route}>{page.title}</Link>
@@ -108,10 +122,14 @@ export default function Header() {
                             textDecoration: 'none',
                         }}
                     >
-                        <Box onClick={() => router.push('/')}><Logo /></Box>
+                        <Box
+                            onClick={() => router.push(status === "authenticated" ? "/admin-dashboard" : "/")}
+                        >
+                            <Logo />
+                        </Box>
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map((page) => (
+                        {status === "authenticated" && pages.map((page) => (
                             <Link key={page.route} style={{ textDecoration: "none" }} href={page.route}>
                                 <Button
                                     onClick={handleCloseNavMenu}
@@ -126,6 +144,7 @@ export default function Header() {
                         <ThemeSwitch sx={{ m: 1 }} defaultChecked onClick={() => {
                             themeMode.toggleThemeMode();
                         }} />
+                        { status === "authenticated" && <Button onClick={() => signOut()}>Sign-Out</Button>}
                     </Box>
                 </Toolbar>
             </Container>

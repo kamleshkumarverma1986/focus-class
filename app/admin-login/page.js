@@ -1,5 +1,6 @@
 "use client"
 
+import { useSession } from "next-auth/react"
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -14,6 +15,7 @@ import { signIn } from "next-auth/react";
 import Copyright from '@/components/Copyright';
 import AlertBox from '@/components/AlertBox';
 import { useRouter } from 'next/navigation';
+import Loading from "../loading";
 
 const initialFormData = {
     mobileNumber: "",
@@ -21,12 +23,13 @@ const initialFormData = {
 }
 
 export default function AdminLogin() {
+    const { status } = useSession();
     const router = useRouter();
     const [isAlertOpen, setIsAlertOpen] = React.useState(false);
     const [alertProps, setAlertProps] = React.useState(null);
 
     const [sendOtp, isOtpSending, otpData, otpError] = useFetch("/api/send-otp");
-    const [adminLogin, isLogging, loginData, loginError] = useFetch("/api/admin-login");
+    const [isLogging, setIsLogging] = React.useState(false);
 
     const [formData, setFormData] = React.useState(initialFormData);
     const [isOtpSent, setIsOtpSent ] = React.useState(false);
@@ -38,11 +41,11 @@ export default function AdminLogin() {
     }, [otpData]);
 
     React.useEffect(() => {
-        if (otpError || loginError) {
+        if (otpError) {
             setIsAlertOpen(true);
-            setAlertProps(otpError || loginError);
+            setAlertProps(otpError);
         }
-    }, [otpError, loginError]);
+    }, [otpError]);
 
     const sendOtpToMobileNumber = () => {
         sendOtp({
@@ -57,6 +60,7 @@ export default function AdminLogin() {
             sendOtpToMobileNumber();
         } else {
             try {
+                setIsLogging(true);
                 const res = await signIn("credentials", {
                     ...formData,
                     redirect: false,
@@ -67,6 +71,7 @@ export default function AdminLogin() {
                         isSuccess: false,
                         message: "Invalid Credentials!"
                     });
+                    setIsLogging(false);
                     return;
                 }
                 router.replace('admin-dashboard');
@@ -76,6 +81,7 @@ export default function AdminLogin() {
                     isSuccess: false,
                     message: error.message,
                 });
+                setIsLogging(false);
             }
         }
     };
@@ -91,7 +97,15 @@ export default function AdminLogin() {
         setIsOtpSent(false);
     }
 
-  return (
+    if (status === "loading") {
+      return <Loading />
+    }
+
+    if (status === "authenticated") {
+      return router.replace('admin-dashboard');
+    }
+
+    return (
       <Container component="main" maxWidth="xs">
         <Box
           sx={{
@@ -197,5 +211,5 @@ export default function AdminLogin() {
             {...alertProps}
         />
       </Container>
-  );
+    );
 }

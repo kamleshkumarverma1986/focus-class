@@ -20,7 +20,7 @@ const handler = NextAuth({
                 "otp.value": otp,
             });
             if (admin) {
-                return admin._id;
+                return admin;
             } else {
                 return null
             }
