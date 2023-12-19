@@ -81,6 +81,19 @@ export default function EnquiryForm() {
                                     size="small"
                                     autoComplete="off"
                                     variant="standard"
+                                    id="mobileNumber"
+                                    type="number"
+                                    inputProps={{
+                                        inputMode: "numeric",
+                                        onInput: (e) => e.target.value = e.target.value.slice(0, 10),
+                                        onChange : (e) => {
+                                            if(e.target.value.length !== 10) {
+                                                e.target.setCustomValidity('Please enter valid mobile number')
+                                            } else {
+                                                e.target.setCustomValidity('')
+                                            }
+                                        },
+                                    }}
                                 />
                             </Grid>
                             <Grid item xs={12}>

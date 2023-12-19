@@ -1,4 +1,5 @@
 import { Paper, Container, Box, Typography } from "@mui/material";
+import Copyright from "./Copyright";
 
 export default function Footer() {
     return (
@@ -19,9 +20,7 @@ export default function Footer() {
                         alignItems: "center",
                     }}
                 >
-                    <Typography variant="caption" color="initial">
-                        Copyright ©2023. Focus Class Limited
-                    </Typography>
+                    <Copyright />
                 </Box>
             </Container>
         </Paper>
