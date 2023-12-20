@@ -2,24 +2,18 @@
 
 import { useEffect, useState } from "react";
 
-const uploadImage = async (imageData, fileType) => {
-  return new Promise(async (resolve, reject) => {
-    try {
-      const res = await fetch(
-        `https://api.cloudinary.com/v1_1/drwcm1tej/${
-          fileType.includes("image") ? "image" : "video"
-        }/upload`,
-        {
-          method: "POST",
-          body: imageData,
-        }
-      );
-      const response = await res.json();
-      resolve(response);
-    } catch (error) {
-      reject(error);
+const uploadImageOnCloud = async (imageData, fileType) => {
+  const res = await fetch(
+    `https://api.cloudinary.com/v1_1/${
+      process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
+    }/${fileType.includes("image") ? "image" : "video"}/upload`,
+    {
+      method: "POST",
+      body: imageData,
     }
-  });
+  );
+  const json = await res.json();
+  return json;
 };
 
 export default function MediaUpload({
@@ -31,26 +25,31 @@ export default function MediaUpload({
   const [fileList, setFileList] = useState(null);
 
   const onImageUploadHandler = async (files) => {
-    const allImagePromises = [];
-    files.forEach((file, i) => {
-      const imageData = new FormData();
-      imageData.append("file", file);
-      imageData.append("upload_preset", "ravi_raushan_ka_apna_facebook");
-      imageData.append("cloud_name", "drwcm1tej");
-      allImagePromises.push(uploadImage(imageData, file.type));
-    });
-    Promise.all(allImagePromises)
-      .then((medias) => {
-        setFileList(null);
-        const mainMedia = medias.map((media) => {
-          const { asset_id, resource_type, secure_url, url } = media;
-          return { asset_id, resource_type, secure_url, url };
-        });
-        onSuccessUpload(mainMedia);
-      })
-      .catch((error) => {
-        console.log("There is some error while uploading media", error);
+    try {
+      const allImagePromises = [];
+      files.forEach((file) => {
+        const imageData = new FormData();
+        imageData.append("file", file);
+        imageData.append(
+          "upload_preset",
+          process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
+        );
+        imageData.append(
+          "cloud_name",
+          process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
+        );
+        allImagePromises.push(uploadImageOnCloud(imageData, file.type));
       });
+      const medias = await Promise.all(allImagePromises);
+      const mainMedia = medias.map((media) => {
+        const { asset_id, resource_type, secure_url, url } = media;
+        return { asset_id, resource_type, secure_url, url };
+      });
+      setFileList(null);
+      onSuccessUpload(mainMedia);
+    } catch (error) {
+      console.log("There is some error while uploading media", error);
+    }
   };
 
   useEffect(() => {
@@ -66,7 +65,7 @@ export default function MediaUpload({
   return (
     <>
       <span
-        onClick={(e) => {
+        onClick={() => {
           document.getElementById("selectedFile").click();
         }}
       >

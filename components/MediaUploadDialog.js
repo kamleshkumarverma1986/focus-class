@@ -19,7 +19,6 @@ export default function MediaUploadDialog({
   title,
   imageList = [],
   onDelete,
-  onUpdate,
   onAdd,
 }) {
   const [loadingImageList, setLoadingImageList] = React.useState([]);
@@ -34,11 +33,6 @@ export default function MediaUploadDialog({
     onAdd(uploadedImages);
   };
 
-  const onSuccessfulUpdate = (uploadedImages) => {
-    setLoadingImageList([]);
-    onUpdate(uploadedImages);
-  };
-
   return (
     <Box>
       <Typography variant="h4" sx={{ textAlign: "center" }}>
@@ -49,10 +43,7 @@ export default function MediaUploadDialog({
             onSuccessUpload={onSuccessfulAdd}
           >
             <Tooltip title="Add more images">
-              <IconButton
-                sx={{ color: "rgba(255, 255, 255, 0.54)" }}
-                aria-label={`info about ${"dada"}`}
-              >
+              <IconButton aria-label={`info about ${"dada"}`}>
                 <AddOutlinedIcon />
               </IconButton>
             </Tooltip>
@@ -74,32 +65,17 @@ export default function MediaUploadDialog({
               }}
             />
             <ImageListItemBar
-              sx={{ position: "relative" }}
+              sx={{ position: "relative", bottom: "7px" }}
               actionIcon={
                 <Box sx={{ display: "flex" }}>
                   <Tooltip title="Delete this image">
                     <IconButton
-                      sx={{ color: "rgba(255, 255, 255, 0.54)" }}
-                      aria-label={`info about ${"dada"}`}
+                      aria-label={`info about data`}
                       onClick={() => onDelete(img.asset_id)}
                     >
                       <DeleteForeverOutlinedIcon />
                     </IconButton>
                   </Tooltip>
-                  <MediaUpload
-                    isMultiple={false}
-                    onInitialUpload={onInitialUploadHandler}
-                    onSuccessUpload={onSuccessfulUpdate}
-                  >
-                    <Tooltip title="Upload new image">
-                      <IconButton
-                        sx={{ color: "rgba(255, 255, 255, 0.54)" }}
-                        aria-label={`info about ${"dada"}`}
-                      >
-                        <CloudUploadOutlinedIcon />
-                      </IconButton>
-                    </Tooltip>
-                  </MediaUpload>
                 </Box>
               }
             />

@@ -11,6 +11,7 @@ import DialogBox from "@/components/DialogBox";
 import MediaUploadDialog from "@/components/MediaUploadDialog";
 import { Box, Button } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
+import AlertBox from "@/components/AlertBox";
 
 const initialMediaSet = {
   key: "",
@@ -23,8 +24,10 @@ export default function EditHomePage() {
   const [postHomePage, isHomePageSaving, savedHomePageData] =
     useFetch("/api/home-page");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-
   const [currentMediaSet, setCurrentMediaSet] = useState(initialMediaSet);
+
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [alertProps, setAlertProps] = useState(null);
 
   const saveHomePage = async () => {
     await postHomePage({
@@ -49,6 +52,11 @@ export default function EditHomePage() {
   useEffect(() => {
     if (savedHomePageData) {
       setHomePage(savedHomePageData.homePage);
+      setAlertProps({
+        ...savedHomePageData,
+        isSuccess: true,
+      });
+      setIsAlertOpen(true);
     }
   }, [savedHomePageData]);
 
@@ -111,7 +119,6 @@ export default function EditHomePage() {
           <Gallery title="Our Gallery" imageList={homePage.galleryImageList} />
         </MediaEditContainer>
       </WidgetContainer>
-
       <DialogBox
         isOpen={isDialogOpen}
         handleClose={() => {
@@ -126,11 +133,21 @@ export default function EditHomePage() {
           onAdd={onAddMediaHandler}
         />
       </DialogBox>
-      <Box sx={{ textAlign: "center" }}>
-        <LoadingButton onClick={saveHomePage} loading={isHomePageSaving}>
+      <Box sx={{ textAlign: "center", mt: "100px" }}>
+        <LoadingButton
+          onClick={saveHomePage}
+          loading={isHomePageSaving}
+          size="large"
+          variant="contained"
+        >
           Save Home Page
         </LoadingButton>
       </Box>
+      <AlertBox
+        isOpen={isAlertOpen}
+        handleClose={() => setIsAlertOpen(false)}
+        {...alertProps}
+      />
     </main>
   );
 }
