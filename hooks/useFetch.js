@@ -13,7 +13,6 @@ export const useFetch = (url) => {
         ...options,
         cache: "no-store",
       });
-
       const json = await response.json();
       if (!response.ok) {
         throw new Error(json.message);

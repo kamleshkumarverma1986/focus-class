@@ -12,6 +12,7 @@ import MediaUploadDialog from "@/components/MediaUploadDialog";
 import { Box, Button } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import AlertBox from "@/components/AlertBox";
+import { useRouter } from "next/navigation";
 
 const initialMediaSet = {
   key: "",
@@ -19,6 +20,7 @@ const initialMediaSet = {
 };
 
 export default function EditHomePage() {
+  const router = useRouter();
   const [homePage, setHomePage] = useState({});
   const [getHomePage, isLoading, homePageData] = useFetch("/api/home-page");
   const [postHomePage, isHomePageSaving, savedHomePageData] =
@@ -133,12 +135,27 @@ export default function EditHomePage() {
           onAdd={onAddMediaHandler}
         />
       </DialogBox>
-      <Box sx={{ textAlign: "center", mt: "100px" }}>
+      <Box
+        sx={{
+          textAlign: "center",
+          mt: "100px",
+        }}
+      >
+        <Button
+          onClick={() => router.back()}
+          loading={isHomePageSaving}
+          size="large"
+          variant="contained"
+          sx={{ mr: "10px" }}
+        >
+          Cancel
+        </Button>
         <LoadingButton
           onClick={saveHomePage}
           loading={isHomePageSaving}
           size="large"
           variant="contained"
+          sx={{ mr: "10px" }}
         >
           Save Home Page
         </LoadingButton>
