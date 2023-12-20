@@ -9,7 +9,11 @@ export const useFetch = (url) => {
     try {
       setIsLoading(true);
       setError(null);
-      const response = await fetch(url, options);
+      const response = await fetch(url, {
+        ...options,
+        cache: "no-store",
+      });
+
       const json = await response.json();
       if (!response.ok) {
         throw new Error(json.message);

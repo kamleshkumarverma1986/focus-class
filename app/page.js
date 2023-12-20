@@ -6,6 +6,8 @@ import WidgetContainer from "@/components/WidgetContainer";
 import Gallery from "@/components/Gallery";
 import { getHomePage } from "@/service";
 
+export const revalidate = 5; // revalidate the data at most every hour
+
 export default async function Home() {
   const { carouselImageList, galleryImageList } = await getHomePage();
 
