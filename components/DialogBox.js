@@ -15,7 +15,8 @@ export default function DialogBox({
     dialogTitle,
     dialogContentText,
     isOpen,
-    handleClose
+    handleClose,
+    children
 }) {
     return (
         <Dialog
@@ -25,11 +26,14 @@ export default function DialogBox({
             onClose={handleClose}
             aria-describedby="alert-dialog-slide-description"
         >
-            <DialogTitle>{dialogTitle}</DialogTitle>
+            {dialogTitle && <DialogTitle>{dialogTitle}</DialogTitle>}
             <DialogContent>
-                <DialogContentText id="alert-dialog-slide-description">
-                    {dialogContentText}
-                </DialogContentText>
+                {dialogContentText && (
+                    <DialogContentText id="alert-dialog-slide-description">
+                        {dialogContentText}
+                    </DialogContentText>
+                )}
+                {children}
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose}>Ok</Button>

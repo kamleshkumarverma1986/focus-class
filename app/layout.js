@@ -12,7 +12,7 @@ import SessionProvider from "@/providers/SessionProvider";
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Focus Class',
+  title: 'Focus Class | Root Class | Focus Class - Best Coaching in Jabalpur |  Focus Class - Best Coaching for 8th, 9th, 10th and 12th | Focus Class NEET JEE | Best Coaching for NEET and JEE',
   description: 'Best Coaching in Jabalpur',
 }
 

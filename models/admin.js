@@ -15,7 +15,13 @@ const AdminSchema = new Schema({
     required: true,
   },
   otp: {
-    value: { type: String, required: false, trim: true, minlength: 4, maxlength: 6 },
+    value: {
+      type: String,
+      required: false,
+      trim: true,
+      minlength: 4,
+      maxlength: 6,
+    },
     isExpire: { type: Boolean, required: true, default: false },
   },
 });

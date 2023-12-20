@@ -1,132 +1,88 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
+import { useEffect, useState } from "react";
 
-export default function MediaUpload({ onSuccessUpload, isMultiple = true, children }) {
-  const [loading, setLoading] = useState(false);
+const uploadImage = async (imageData, fileType) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res = await fetch(
+        `https://api.cloudinary.com/v1_1/drwcm1tej/${
+          fileType.includes("image") ? "image" : "video"
+        }/upload`,
+        {
+          method: "POST",
+          body: imageData,
+        }
+      );
+      const response = await res.json();
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+export default function MediaUpload({
+  onSuccessUpload,
+  onInitialUpload,
+  isMultiple = true,
+  children,
+}) {
   const [fileList, setFileList] = useState(null);
 
-
-  const uploadImage = async (imageData, fileType) => {
-    return new Promise(async (resolve, reject) => {
-      try {
-        const res = await fetch(
-          `https://api.cloudinary.com/v1_1/drwcm1tej/${fileType.includes("image") ? "image" : "video"
-          }/upload`,
-          {
-            method: "POST",
-            body: imageData,
-          }
-        );
-        const response = await res.json();
-        resolve(response);
-      } catch (error) {
-        reject(error);
-      }
-    });
-  };
-
-  const onImageUploadHandler = async (e) => {
-    if (!fileList || !files.length) {
-      return;
-    }
+  const onImageUploadHandler = async (files) => {
     const allImagePromises = [];
-    setLoading(true);
     files.forEach((file, i) => {
       const imageData = new FormData();
-
       imageData.append("file", file);
       imageData.append("upload_preset", "ravi_raushan_ka_apna_facebook");
       imageData.append("cloud_name", "drwcm1tej");
       allImagePromises.push(uploadImage(imageData, file.type));
     });
     Promise.all(allImagePromises)
-      .then(async (medias) => {
-        setLoading(false);
+      .then((medias) => {
         setFileList(null);
         const mainMedia = medias.map((media) => {
-          return {
-            url: media.url,
-          };
+          const { asset_id, resource_type, secure_url, url } = media;
+          return { asset_id, resource_type, secure_url, url };
         });
         onSuccessUpload(mainMedia);
       })
       .catch((error) => {
         console.log("There is some error while uploading media", error);
-        setLoading(false);
       });
   };
 
-  // 👇 files is not an array, but it's iterable, spread to get an array of files
-  const files = fileList ? [...fileList] : [];
+  useEffect(() => {
+    const files = fileList ? [...fileList] : [];
+    if (files.length) {
+      (async () => {
+        await onImageUploadHandler(files);
+      })();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fileList]);
 
   return (
-    <section>
-      <div>
-        {children}
-      </div>
-
-      <section
-        className="d-flex justify-content-center"
-        style={{ minHeight: "50px" }}
+    <>
+      <span
+        onClick={(e) => {
+          document.getElementById("selectedFile").click();
+        }}
       >
-        <input
-          style={{ display: "none" }}
-          className="fileInput"
-          id="selectedFile"
-          type="file"
-          multiple={isMultiple}
-          onChange={(e) => {
-            setFileList(e.target.files);
-          }}
-        />
-        <button
-          className="btn btn-primary btn-lg"
-          onClick={(e) => {
-            document.getElementById("selectedFile").click();
-          }}
-        >
-          <i className="fa-solid fa-camera"></i> Click here to upload images
-        </button>
-      </section>
-      {!!files.length && (
-        <div>
-          <section className="uploading-image-section">
-            {files.map((file, index) => (
-              <Image
-                key={index}
-                className="uploading-image"
-                src={URL.createObjectURL(file)}
-                alt="uploading-pic"
-                width={500}
-                height={500}
-              />
-            ))}
-          </section>
-          <div className="d-flex justify-content-center">
-            <button
-              className="btn btn-primary"
-              type="button"
-              disabled={loading}
-              onClick={onImageUploadHandler}
-            >
-              {loading ? (
-                <span>
-                  <span
-                    className="spinner-border spinner-border-sm"
-                    role="status"
-                    aria-hidden="true"
-                  ></span>
-                  Loading...
-                </span>
-              ) : (
-                <span>Upload Image on server</span>
-              )}
-            </button>
-          </div>
-        </div>
-      )}
-    </section>
+        {children}
+      </span>
+      <input
+        style={{ display: "none" }}
+        className="fileInput"
+        id="selectedFile"
+        type="file"
+        multiple={isMultiple}
+        onChange={(e) => {
+          onInitialUpload(e.target.files);
+          setFileList(e.target.files);
+        }}
+      />
+    </>
   );
 }

@@ -1,35 +1,29 @@
 import CarouselWidget from "@/components/CarouselWidget";
-import topImg1 from "../public/images/top-img1.jpeg";
-import topImg2 from "../public/images/top-img2.jpeg";
-import topImg3 from "../public/images/top-img3.jpeg";
 import MarqueeWidget from "@/components/MarqueeWidget";
 import CardContainer from "@/components/CardContainer";
 import EnquiryForm from "@/components/EnquiryForm";
 import WidgetContainer from "@/components/WidgetContainer";
 import Gallery from "@/components/Gallery";
+import { getHomePage } from "@/service";
 
-export default function Home() {
-  const imageList = [
-    {id: 1, url: topImg1},
-    {id: 2, url: topImg2},
-    {id: 3, url: topImg3},
-  ]
+export default async function Home() {
+  const { carouselImageList, galleryImageList } = await getHomePage();
 
   return (
-      <main>
-        <CarouselWidget imageList={imageList}/>
-        <WidgetContainer>
-          <EnquiryForm />
-        </WidgetContainer>
-        <WidgetContainer>
-          <CardContainer />
-        </WidgetContainer>
-        <WidgetContainer>
-          <MarqueeWidget />
-        </WidgetContainer>
-        <WidgetContainer>
-          <Gallery />
-        </WidgetContainer>
-      </main>
-  )
+    <main>
+      <CarouselWidget imageList={carouselImageList} />
+      <WidgetContainer>
+        <EnquiryForm />
+      </WidgetContainer>
+      <WidgetContainer>
+        <CardContainer />
+      </WidgetContainer>
+      <WidgetContainer>
+        <MarqueeWidget />
+      </WidgetContainer>
+      <WidgetContainer>
+        <Gallery title="Our Gallery" imageList={galleryImageList} />
+      </WidgetContainer>
+    </main>
+  );
 }

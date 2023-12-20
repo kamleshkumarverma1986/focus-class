@@ -7,24 +7,24 @@ export const useFetch = (url) => {
 
   const callApi = async (options) => {
     try {
-        setIsLoading(true);
-        setError(null);
-        const response = await fetch(url, options);
-        const json = await response.json();
-        if (!response.ok) {
-          throw new Error(json.message);
-        }
-        setIsLoading(false);
-        setData(json);
-        setError(null);
+      setIsLoading(true);
+      setError(null);
+      const response = await fetch(url, options);
+      const json = await response.json();
+      if (!response.ok) {
+        throw new Error(json.message);
+      }
+      setIsLoading(false);
+      setData(json);
+      setError(null);
     } catch (error) {
-        setError({
-          isSuccess: false,
-          message: error.message,
-        });
-        setIsLoading(false);
+      setError({
+        isSuccess: false,
+        message: error.message,
+      });
+      setIsLoading(false);
     }
-  }
-  
-  return [callApi, isLoading, data, error]
+  };
+
+  return [callApi, isLoading, data, error];
 };

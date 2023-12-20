@@ -10,7 +10,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Container from '@mui/material/Container';
-import { addEnquiry } from "@/actions/addEnquiry";
+import { addEnquiry } from "@/action";
 import FormSubmitButton from "./FormSubmitButton";
 import AlertBox from "./AlertBox";
 
