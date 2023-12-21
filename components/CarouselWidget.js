@@ -9,17 +9,16 @@ export default function CarouselWidget({
   style = { width: "100%", height: "100%" },
   autoPlay = true,
 }) {
-  imageList =
-    imageList && imageList.length
-      ? imageList
-      : [
-          {
-            asset_id: 1,
-            resource_type: "image",
-            secure_url: defaultCarouselImage,
-            url: defaultCarouselImage,
-          },
-        ];
+  imageList = !!(imageList && imageList.length)
+    ? imageList
+    : [
+        {
+          asset_id: 1,
+          resource_type: "image",
+          secure_url: defaultCarouselImage,
+          url: defaultCarouselImage,
+        },
+      ];
   return (
     <>
       <Carousel

@@ -68,7 +68,7 @@ export default function MediaUpload({
   };
 
   useEffect(() => {
-    const files = fileList ? [...fileList] : [];
+    const files = !!fileList ? [...fileList] : [];
     if (files.length) {
       (async () => {
         onInitialUpload(files);

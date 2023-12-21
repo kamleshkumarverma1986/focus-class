@@ -14,7 +14,7 @@ export const getHomePage = async () => {
     await connectToDB();
     const homePages = await HomePage.find({}).lean();
     // Remember: Only one home-page object will be saved in DB.
-    return homePages.length
+    return !!homePages.length
       ? { ...initialHomePageDataSet, ...homePages[0] }
       : initialHomePageDataSet;
   } catch (error) {

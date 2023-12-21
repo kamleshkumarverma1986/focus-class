@@ -40,7 +40,7 @@ export default function DialogBox({
         )}
         {children}
       </DialogContent>
-      <DialogActions sx={{ mb: { xs: "20px", md: "0px" } }}>
+      <DialogActions>
         <Button onClick={handleClose}>Ok</Button>
       </DialogActions>
     </Dialog>
