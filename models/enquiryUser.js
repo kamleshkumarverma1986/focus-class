@@ -11,7 +11,7 @@ const EnquiryUserSchema = new Schema({
   },
   email: {
     type: String,
-    required: true,
+    required: false,
   },
   address: {
     type: String,
@@ -35,6 +35,7 @@ const EnquiryUserSchema = new Schema({
   },
 });
 
-const EnquiryUser = models?.EnquiryUser || model("EnquiryUser", EnquiryUserSchema);
+const EnquiryUser =
+  models?.EnquiryUser || model("EnquiryUser", EnquiryUserSchema);
 
 export default EnquiryUser;

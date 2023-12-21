@@ -24,15 +24,21 @@ export default function EnquiryForm() {
   const [selectedGoal, setSelectedGoal] = React.useState("");
 
   const classes = ["8th", "9th", "10th", "11th", "12th", "Other"];
-  const boards = ["CBSE", "Other"];
+  const boards = [
+    "CBSE",
+    "ICSE",
+    "MP BOARD ENGLISH MEDIUM",
+    "MP BOARD HINDI MEDIUM",
+    "Other",
+  ];
   const goals = [
-    "8th",
-    "9th",
-    "10th (NTSE)",
+    "NTSE",
+    "Olympiad",
     "11th (JEE or NEET)",
     "12th (JEE or NEET)",
     "Dropper (JEE or NEET)",
     "Medical or Engineering",
+    "Other",
   ];
 
   const formReset = () => {
@@ -105,7 +111,6 @@ export default function EnquiryForm() {
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
-                    required
                     name="email"
                     label="Email ID"
                     type="email"
