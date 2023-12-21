@@ -9,8 +9,6 @@ import Typography from "@mui/material/Typography";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 import IconButton from "@mui/material/IconButton";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
-import CloudUploadOutlinedIcon from "@mui/icons-material/CloudUploadOutlined";
-import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { Tooltip } from "@mui/material";
 import MediaUpload from "./MediaUpload";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -23,11 +21,6 @@ export default function MediaUploadDialog({
 }) {
   const [loadingImageList, setLoadingImageList] = React.useState([]);
 
-  const onInitialUploadHandler = (files) => {
-    files = files ? [...files] : [];
-    setLoadingImageList(files);
-  };
-
   const onSuccessfulAdd = (uploadedImages) => {
     setLoadingImageList([]);
     onAdd(uploadedImages);
@@ -39,15 +32,9 @@ export default function MediaUploadDialog({
         {title}
         <Box>
           <MediaUpload
-            onInitialUpload={onInitialUploadHandler}
+            onInitialUpload={setLoadingImageList}
             onSuccessUpload={onSuccessfulAdd}
-          >
-            <Tooltip title="Add more images">
-              <IconButton aria-label={`info about ${"dada"}`}>
-                <AddOutlinedIcon />
-              </IconButton>
-            </Tooltip>
-          </MediaUpload>
+          />
         </Box>
       </Typography>
       <ImageList variant="masonry" cols={3} gap={12}>
@@ -55,7 +42,7 @@ export default function MediaUploadDialog({
           <ImageListItem key={img.asset_id}>
             <Image
               src={img.url}
-              alt="mediaUploadDialog"
+              alt="mediaUploadDialogImg"
               sizes="100vw"
               height={500}
               width={0}
@@ -70,7 +57,7 @@ export default function MediaUploadDialog({
                 <Box sx={{ display: "flex" }}>
                   <Tooltip title="Delete this image">
                     <IconButton
-                      aria-label={`info about data`}
+                      aria-label={`Delete this image`}
                       onClick={() => onDelete(img.asset_id)}
                     >
                       <DeleteForeverOutlinedIcon />
@@ -85,7 +72,7 @@ export default function MediaUploadDialog({
           <ImageListItem key={index}>
             <Image
               src={URL.createObjectURL(file)}
-              alt="mediaUploadDialog"
+              alt="mediaUploadDialogImg"
               sizes="100vw"
               height={500}
               width={0}

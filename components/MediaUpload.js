@@ -1,6 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { styled } from "@mui/material/styles";
+import Button from "@mui/material/Button";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+  width: 1,
+});
 
 const uploadImageOnCloud = async (imageData, fileType) => {
   const res = await fetch(
@@ -56,6 +71,7 @@ export default function MediaUpload({
     const files = fileList ? [...fileList] : [];
     if (files.length) {
       (async () => {
+        onInitialUpload(files);
         await onImageUploadHandler(files);
       })();
     }
@@ -64,24 +80,21 @@ export default function MediaUpload({
 
   return (
     <>
-      <span
-        onClick={() => {
-          document.getElementById("selectedFile").click();
-        }}
+      <Button
+        component="label"
+        variant="outlined"
+        startIcon={<CloudUploadIcon />}
+        sx={{ margin: "20px" }}
       >
-        {children}
-      </span>
-      <input
-        style={{ display: "none" }}
-        className="fileInput"
-        id="selectedFile"
-        type="file"
-        multiple={isMultiple}
-        onChange={(e) => {
-          onInitialUpload(e.target.files);
-          setFileList(e.target.files);
-        }}
-      />
+        Upload file
+        <VisuallyHiddenInput
+          type="file"
+          multiple={isMultiple}
+          onChange={(e) => {
+            setFileList(e.target.files);
+          }}
+        />
+      </Button>
     </>
   );
 }

@@ -32,11 +32,8 @@ const pages = [
 
 export default function Header() {
   const router = useRouter();
-
   const { status } = useSession();
-
   const themeMode = React.useContext(ThemeModeContext);
-
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
@@ -65,13 +62,7 @@ export default function Header() {
               textDecoration: "none",
             }}
           >
-            <Box
-              onClick={() =>
-                router.push(
-                  status === "authenticated" ? "/admin-dashboard" : "/"
-                )
-              }
-            >
+            <Box onClick={() => router.push("/")}>
               <Logo />
             </Box>
           </Typography>
@@ -135,13 +126,7 @@ export default function Header() {
               textDecoration: "none",
             }}
           >
-            <Box
-              onClick={() =>
-                router.push(
-                  status === "authenticated" ? "/admin-dashboard" : "/"
-                )
-              }
-            >
+            <Box onClick={() => router.push("/")}>
               <Logo />
             </Box>
           </Typography>

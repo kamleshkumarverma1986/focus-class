@@ -1,34 +1,24 @@
 "use client";
 
+import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
-import { styled } from "@mui/material/styles";
-import CameraAltOutlinedIcon from "@mui/icons-material/CameraAltOutlined";
-
-const StyledBoxContainer = styled(Box)({
-  position: "relative",
-  ":hover": {
-    opacity: "0.5",
-  },
-  ":hover .upload-icon": {
-    display: "block",
-  },
-});
+import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 
 export default function MediaEditContainer({ children, onUpload }) {
   return (
-    <Box>
-      <StyledBoxContainer>
-        {children}
-        <div className="upload-icon">
-          <CameraAltOutlinedIcon
-            sx={{
-              transform: "scale(3)",
-              cursor: "pointer",
-            }}
-            onClick={onUpload}
-          />
-        </div>
-      </StyledBoxContainer>
+    <Box className="media-edit-container">
+      <Box className="main-content">{children}</Box>
+      <Box className="upload-button-section">
+        <Button
+          component="label"
+          variant="contained"
+          startIcon={<FileUploadOutlinedIcon />}
+          sx={{ margin: "20px" }}
+          onClick={onUpload}
+        >
+          Update Images
+        </Button>
+      </Box>
     </Box>
   );
 }

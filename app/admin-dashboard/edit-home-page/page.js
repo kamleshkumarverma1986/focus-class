@@ -13,6 +13,7 @@ import { Box, Button } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import AlertBox from "@/components/AlertBox";
 import { useRouter } from "next/navigation";
+import OfferAnnouncement from "@/components/OfferAnnouncement";
 
 const initialMediaSet = {
   key: "",
@@ -115,12 +116,24 @@ export default function EditHomePage() {
       <WidgetContainer>
         <MediaEditContainer
           onUpload={() => {
+            mediaEditClickHandler("offerImageList");
+          }}
+        >
+          <OfferAnnouncement imageList={homePage.offerImageList} />
+        </MediaEditContainer>
+      </WidgetContainer>
+
+      <WidgetContainer>
+        <MediaEditContainer
+          onUpload={() => {
             mediaEditClickHandler("galleryImageList");
           }}
         >
           <Gallery title="Our Gallery" imageList={homePage.galleryImageList} />
         </MediaEditContainer>
       </WidgetContainer>
+
+      {/* Dialog Box */}
       <DialogBox
         isOpen={isDialogOpen}
         handleClose={() => {

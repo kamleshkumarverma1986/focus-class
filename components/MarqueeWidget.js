@@ -1,10 +1,14 @@
 import Marquee from "react-fast-marquee";
-import CardWidget from "./CardWidget";
 
-export default function MarqueeWidget() {
-    return (
-        <Marquee autoFill={true} pauseOnHover={true} gradientColor={[255, 255, 255]} gradientWidth={300}>
-            <CardWidget />
-        </Marquee>
-    )
+export default function MarqueeWidget({ autoFill = true, children }) {
+  return (
+    <Marquee
+      autoFill={autoFill}
+      pauseOnHover={true}
+      gradientColor={[255, 255, 255]}
+      gradientWidth={300}
+    >
+      {children}
+    </Marquee>
+  );
 }

@@ -15,12 +15,16 @@ const HomePageSchema = new Schema(
       type: [imageList],
       default: [],
     },
+    offerImageList: {
+      type: [imageList],
+      default: [],
+    },
     galleryImageList: {
       type: [imageList],
       default: [],
     },
   },
-  { versionKey: false }
+  { versionKey: false, strict: false }
 );
 
 const HomePage = models?.HomePage || model("HomePage", HomePageSchema);
