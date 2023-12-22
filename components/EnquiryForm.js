@@ -58,13 +58,13 @@ export default function EnquiryForm() {
   };
 
   return (
-    <Container>
+    <Container id="enquiry-form">
       <Paper
         square
         variant="outlined"
         sx={{ padding: { xs: "20px", md: "30px" } }}
       >
-        <Typography variant="h4" sx={{ marginBottom: "10px" }}>
+        <Typography variant="h4" sx={{ mb: "20px", mt: "25px" }}>
           Enquiry Form
         </Typography>
         <form ref={formRef} action={formSubmitAction}>

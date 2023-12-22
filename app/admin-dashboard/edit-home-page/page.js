@@ -14,6 +14,7 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import AlertBox from "@/components/AlertBox";
 import { useRouter } from "next/navigation";
 import OfferAnnouncement from "@/components/OfferAnnouncement";
+import CompanyPlacement from "@/components/CompanyPlacement";
 
 const initialMediaSet = {
   key: "",
@@ -103,9 +104,8 @@ export default function EditHomePage() {
   return (
     <main>
       <MediaEditContainer
-        onUpload={() => {
-          mediaEditClickHandler("carouselImageList");
-        }}
+        imageListName="carouselImageList"
+        onUpload={mediaEditClickHandler}
       >
         <CarouselWidget
           imageList={homePage.carouselImageList}
@@ -115,9 +115,8 @@ export default function EditHomePage() {
 
       <WidgetContainer>
         <MediaEditContainer
-          onUpload={() => {
-            mediaEditClickHandler("offerImageList");
-          }}
+          imageListName="offerImageList"
+          onUpload={mediaEditClickHandler}
         >
           <OfferAnnouncement imageList={homePage.offerImageList} />
         </MediaEditContainer>
@@ -125,16 +124,28 @@ export default function EditHomePage() {
 
       <WidgetContainer>
         <MediaEditContainer
-          onUpload={() => {
-            mediaEditClickHandler("galleryImageList");
-          }}
+          imageListName="placementImageList"
+          onUpload={mediaEditClickHandler}
         >
-          <Gallery title="Our Gallery" imageList={homePage.galleryImageList} />
+          <CompanyPlacement imageList={homePage.placementImageList} />
+        </MediaEditContainer>
+      </WidgetContainer>
+
+      <WidgetContainer>
+        <MediaEditContainer
+          imageListName="galleryImageList"
+          onUpload={mediaEditClickHandler}
+        >
+          <Gallery imageList={homePage.galleryImageList} />
         </MediaEditContainer>
       </WidgetContainer>
 
       {/* Dialog Box */}
       <DialogBox
+        dialogTitle={`Upload ${currentMediaSet.key.replace(
+          /([a-z])([A-Z])/g,
+          "$1 $2"
+        )}`}
         isOpen={isDialogOpen}
         handleClose={() => {
           setIsDialogOpen(false);
@@ -142,7 +153,6 @@ export default function EditHomePage() {
         }}
       >
         <MediaUploadDialog
-          title="Upload Images"
           imageList={currentMediaSet.imageList}
           onDelete={onDeleteMediaHandler}
           onAdd={onAddMediaHandler}

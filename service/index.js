@@ -6,6 +6,7 @@ import { connectToDB } from "@/utils/database";
 const initialHomePageDataSet = {
   carouselImageList: [],
   offerImageList: [],
+  placementImageList: [],
   galleryImageList: [],
 };
 

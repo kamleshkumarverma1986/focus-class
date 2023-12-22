@@ -5,53 +5,75 @@ import WidgetContainer from "@/components/WidgetContainer";
 import Gallery from "@/components/Gallery";
 import { getHomePage } from "@/service";
 import OfferAnnouncement from "@/components/OfferAnnouncement";
-import Fab from "@mui/material/Fab";
 import Box from "@mui/material/Box";
-import CallOutlinedIcon from "@mui/icons-material/CallOutlined";
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import Button from "@mui/material/Button";
+import CompanyPlacement from "@/components/CompanyPlacement";
+import ContactWidget from "@/components/ContactWidget";
 
-export const revalidate = 5; // revalidate the data at every 5 sec
+export const revalidate = 5; // revalidate the data at every 5 sec request
 
 export default async function Home() {
-  const { carouselImageList, offerImageList, galleryImageList } =
-    await getHomePage();
+  const {
+    carouselImageList,
+    offerImageList,
+    placementImageList,
+    galleryImageList,
+  } = await getHomePage();
 
   return (
     <main style={{ position: "relative" }}>
-      <CarouselWidget imageList={carouselImageList} />
+      {/* CarouselWidget Banners */}
+      {!!carouselImageList.length && (
+        <CarouselWidget imageList={carouselImageList} />
+      )}
+
+      {/* Enquire-Us Button */}
       <WidgetContainer>
-        <OfferAnnouncement imageList={offerImageList} />
+        <Box sx={{ textAlign: "center" }}>
+          <Button
+            size="large"
+            href="#enquiry-form"
+            variant="contained"
+            color="primary"
+          >
+            Enquire Us
+          </Button>
+        </Box>
       </WidgetContainer>
+
+      {/* Offer Announcement */}
+      {!!offerImageList.length && (
+        <WidgetContainer>
+          <OfferAnnouncement imageList={offerImageList} />
+        </WidgetContainer>
+      )}
+
+      {/* Enquiry Form */}
       <WidgetContainer>
         <EnquiryForm />
       </WidgetContainer>
+
+      {/* Card Container */}
       <WidgetContainer>
         <CardContainer />
       </WidgetContainer>
-      <WidgetContainer>
-        <Gallery title="Our Gallery" imageList={galleryImageList} />
-      </WidgetContainer>
-      <Box
-        sx={{
-          position: "fixed",
-          bottom: 30,
-          right: 0,
-          display: "flex",
-          flexDirection: "column",
-          zIndex: 9,
-        }}
-      >
-        <a href="tel:917047528148">
-          <Fab color="primary" size="small" aria-label="add" sx={{ m: "5px" }}>
-            <CallOutlinedIcon />
-          </Fab>
-        </a>
-        <a href="//api.whatsapp.com/send?phone=917047528148&text=Hi, I want to enquire for course">
-          <Fab color="primary" size="small" aria-label="add" sx={{ m: "5px" }}>
-            <WhatsAppIcon />
-          </Fab>
-        </a>
-      </Box>
+
+      {/* Company Placement */}
+      {!!placementImageList.length && (
+        <WidgetContainer>
+          <CompanyPlacement imageList={placementImageList} />
+        </WidgetContainer>
+      )}
+
+      {/* Gallery */}
+      {!!galleryImageList.length && (
+        <WidgetContainer>
+          <Gallery imageList={galleryImageList} />
+        </WidgetContainer>
+      )}
+
+      {/* Contact Widget */}
+      <ContactWidget />
     </main>
   );
 }

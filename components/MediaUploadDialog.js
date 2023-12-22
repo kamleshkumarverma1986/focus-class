@@ -5,20 +5,14 @@ import Box from "@mui/material/Box";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
 import Image from "next/image";
-import Typography from "@mui/material/Typography";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 import IconButton from "@mui/material/IconButton";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
-import { Tooltip } from "@mui/material";
+import { Paper, Tooltip } from "@mui/material";
 import MediaUpload from "./MediaUpload";
 import CircularProgress from "@mui/material/CircularProgress";
 
-export default function MediaUploadDialog({
-  title,
-  imageList = [],
-  onDelete,
-  onAdd,
-}) {
+export default function MediaUploadDialog({ imageList = [], onDelete, onAdd }) {
   const [loadingImageList, setLoadingImageList] = React.useState([]);
 
   const onSuccessfulAdd = (uploadedImages) => {
@@ -28,15 +22,21 @@ export default function MediaUploadDialog({
 
   return (
     <Box>
-      <Typography variant="h4" sx={{ textAlign: "center" }}>
-        {title}
-        <Box>
-          <MediaUpload
-            onInitialUpload={setLoadingImageList}
-            onSuccessUpload={onSuccessfulAdd}
-          />
-        </Box>
-      </Typography>
+      <Paper
+        variant="outlined"
+        sx={{
+          textAlign: "center",
+          position: "sticky",
+          top: 0,
+          zIndex: 999,
+          p: 2,
+        }}
+      >
+        <MediaUpload
+          onInitialUpload={setLoadingImageList}
+          onSuccessUpload={onSuccessfulAdd}
+        />
+      </Paper>
       <ImageList variant="masonry" cols={3} gap={12}>
         {imageList.map((img) => (
           <ImageListItem key={img.asset_id}>

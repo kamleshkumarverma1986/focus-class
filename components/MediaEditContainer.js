@@ -4,7 +4,11 @@ import { Button } from "@mui/material";
 import Box from "@mui/material/Box";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 
-export default function MediaEditContainer({ children, onUpload }) {
+export default function MediaEditContainer({
+  imageListName,
+  children,
+  onUpload,
+}) {
   return (
     <Box className="media-edit-container">
       <Box className="main-content">{children}</Box>
@@ -14,9 +18,9 @@ export default function MediaEditContainer({ children, onUpload }) {
           variant="contained"
           startIcon={<FileUploadOutlinedIcon />}
           sx={{ margin: "20px" }}
-          onClick={onUpload}
+          onClick={() => onUpload(imageListName)}
         >
-          Update Images
+          Upload {imageListName.replace(/([a-z])([A-Z])/g, "$1 $2")}
         </Button>
       </Box>
     </Box>

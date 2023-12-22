@@ -86,7 +86,7 @@ export default function MediaUpload({
         startIcon={<CloudUploadIcon />}
         sx={{ margin: "20px" }}
       >
-        Upload file
+        Upload files
         <VisuallyHiddenInput
           type="file"
           multiple={isMultiple}
