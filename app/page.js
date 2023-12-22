@@ -1,14 +1,13 @@
 import CarouselWidget from "@/components/CarouselWidget";
-import CardContainer from "@/components/CardContainer";
+import CardSection from "@/components/CardSection";
 import EnquiryForm from "@/components/EnquiryForm";
 import WidgetContainer from "@/components/WidgetContainer";
 import Gallery from "@/components/Gallery";
 import { getHomePage } from "@/service";
-import OfferAnnouncement from "@/components/OfferAnnouncement";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import CompanyPlacement from "@/components/CompanyPlacement";
 import ContactWidget from "@/components/ContactWidget";
+import MarqueeSection from "@/components/MarqueeSection";
 
 export const revalidate = 5; // revalidate the data at every 5 sec request
 
@@ -16,6 +15,8 @@ export default async function Home() {
   const {
     carouselImageList,
     offerImageList,
+    topperStudentImageList,
+    facultyImageList,
     placementImageList,
     galleryImageList,
   } = await getHomePage();
@@ -41,10 +42,13 @@ export default async function Home() {
         </Box>
       </WidgetContainer>
 
-      {/* Offer Announcement */}
+      {/* Offer Announcement Marquee */}
       {!!offerImageList.length && (
         <WidgetContainer>
-          <OfferAnnouncement imageList={offerImageList} />
+          <MarqueeSection
+            title="Offer Announcement"
+            imageList={offerImageList}
+          />
         </WidgetContainer>
       )}
 
@@ -53,15 +57,33 @@ export default async function Home() {
         <EnquiryForm />
       </WidgetContainer>
 
-      {/* Card Container */}
-      <WidgetContainer>
-        <CardContainer />
-      </WidgetContainer>
+      {/* Topper Students Marquee */}
+      {!!topperStudentImageList.length && (
+        <WidgetContainer>
+          <MarqueeSection
+            title="Our Topper Students"
+            imageList={topperStudentImageList}
+          />
+        </WidgetContainer>
+      )}
 
-      {/* Company Placement */}
+      {/* Card Section for Our Faculty */}
+      {!!facultyImageList.length && (
+        <WidgetContainer>
+          <CardSection
+            title="Our Dedicated Faculty"
+            imageList={facultyImageList}
+          />
+        </WidgetContainer>
+      )}
+
+      {/* Company Placement Marquee */}
       {!!placementImageList.length && (
         <WidgetContainer>
-          <CompanyPlacement imageList={placementImageList} />
+          <MarqueeSection
+            title="Our Student Placement"
+            imageList={placementImageList}
+          />
         </WidgetContainer>
       )}
 

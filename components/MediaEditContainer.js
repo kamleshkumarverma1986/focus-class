@@ -20,7 +20,7 @@ export default function MediaEditContainer({
           sx={{ margin: "20px" }}
           onClick={() => onUpload(imageListName)}
         >
-          Upload {imageListName.replace(/([a-z])([A-Z])/g, "$1 $2")}
+          Update {imageListName.replace(/([a-z])([A-Z])/g, "$1 $2")}
         </Button>
       </Box>
     </Box>

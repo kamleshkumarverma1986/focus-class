@@ -13,8 +13,8 @@ import { Box, Button } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import AlertBox from "@/components/AlertBox";
 import { useRouter } from "next/navigation";
-import OfferAnnouncement from "@/components/OfferAnnouncement";
-import CompanyPlacement from "@/components/CompanyPlacement";
+import MarqueeSection from "@/components/MarqueeSection";
+import CardSection from "@/components/CardSection";
 
 const initialMediaSet = {
   key: "",
@@ -118,7 +118,22 @@ export default function EditHomePage() {
           imageListName="offerImageList"
           onUpload={mediaEditClickHandler}
         >
-          <OfferAnnouncement imageList={homePage.offerImageList} />
+          <MarqueeSection
+            title="Offer Announcement"
+            imageList={homePage.offerImageList}
+          />
+        </MediaEditContainer>
+      </WidgetContainer>
+
+      <WidgetContainer>
+        <MediaEditContainer
+          imageListName="topperStudentImageList"
+          onUpload={mediaEditClickHandler}
+        >
+          <MarqueeSection
+            title="Our Topper Students"
+            imageList={homePage.topperStudentImageList}
+          />
         </MediaEditContainer>
       </WidgetContainer>
 
@@ -127,7 +142,22 @@ export default function EditHomePage() {
           imageListName="placementImageList"
           onUpload={mediaEditClickHandler}
         >
-          <CompanyPlacement imageList={homePage.placementImageList} />
+          <MarqueeSection
+            title="Our Student Placement"
+            imageList={homePage.placementImageList}
+          />
+        </MediaEditContainer>
+      </WidgetContainer>
+
+      <WidgetContainer>
+        <MediaEditContainer
+          imageListName="facultyImageList"
+          onUpload={mediaEditClickHandler}
+        >
+          <CardSection
+            title="Our Faculty"
+            imageList={homePage.facultyImageList}
+          />
         </MediaEditContainer>
       </WidgetContainer>
 

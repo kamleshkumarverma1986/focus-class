@@ -19,6 +19,14 @@ const HomePageSchema = new Schema(
       type: [imageList],
       default: [],
     },
+    topperStudentImageList: {
+      type: [imageList],
+      default: [],
+    },
+    facultyImageList: {
+      type: [imageList],
+      default: [],
+    },
     placementImageList: {
       type: [imageList],
       default: [],

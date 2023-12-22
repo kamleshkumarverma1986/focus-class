@@ -5,7 +5,7 @@ export default function NoImageWidget() {
   return (
     <Box sx={{ display: "flex", justifyContent: "center" }}>
       <Alert severity="warning">
-        There is no images, Please upload the images
+        There are no images present, Please upload the images
       </Alert>
     </Box>
   );
