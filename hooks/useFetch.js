@@ -11,7 +11,7 @@ export const useFetch = (url) => {
       setError(null);
       const response = await fetch(url, {
         ...options,
-        cache: "no-store",
+        cache: "no-cache",
       });
       const json = await response.json();
       if (!response.ok) {
