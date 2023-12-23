@@ -9,6 +9,7 @@ const initialHomePageDataSet = {
   topperStudentImageList: [],
   facultyImageList: [],
   placementImageList: [],
+  testimonialImageList: [],
   galleryImageList: [],
 };
 

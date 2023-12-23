@@ -139,6 +139,18 @@ export default function EditHomePage() {
 
       <WidgetContainer>
         <MediaEditContainer
+          imageListName="facultyImageList"
+          onUpload={mediaEditClickHandler}
+        >
+          <CardSection
+            title="Our Faculty"
+            imageList={homePage.facultyImageList}
+          />
+        </MediaEditContainer>
+      </WidgetContainer>
+
+      <WidgetContainer>
+        <MediaEditContainer
           imageListName="placementImageList"
           onUpload={mediaEditClickHandler}
         >
@@ -151,12 +163,12 @@ export default function EditHomePage() {
 
       <WidgetContainer>
         <MediaEditContainer
-          imageListName="facultyImageList"
+          imageListName="testimonialImageList"
           onUpload={mediaEditClickHandler}
         >
-          <CardSection
-            title="Our Faculty"
-            imageList={homePage.facultyImageList}
+          <MarqueeSection
+            title="Testimonials"
+            imageList={homePage.testimonialImageList}
           />
         </MediaEditContainer>
       </WidgetContainer>

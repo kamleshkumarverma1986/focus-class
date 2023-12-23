@@ -31,6 +31,10 @@ const HomePageSchema = new Schema(
       type: [imageList],
       default: [],
     },
+    testimonialImageList: {
+      type: [imageList],
+      default: [],
+    },
     galleryImageList: {
       type: [imageList],
       default: [],

@@ -18,6 +18,7 @@ export default async function Home() {
     topperStudentImageList,
     facultyImageList,
     placementImageList,
+    testimonialImageList,
     galleryImageList,
   } = await getHomePage();
 
@@ -83,6 +84,16 @@ export default async function Home() {
           <MarqueeSection
             title="Our Student Placement"
             imageList={placementImageList}
+          />
+        </WidgetContainer>
+      )}
+
+      {/* Testimonial Marquee */}
+      {!!testimonialImageList.length && (
+        <WidgetContainer>
+          <MarqueeSection
+            title="Testimonials"
+            imageList={testimonialImageList}
           />
         </WidgetContainer>
       )}
