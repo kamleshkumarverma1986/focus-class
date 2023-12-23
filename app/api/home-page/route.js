@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { connectToDB } from "@/utils/database";
 import { getHomePage } from "@/service";
 import HomePage from "@/models/homePage";
-import { Types } from "mongoose";
 
 export async function GET() {
   try {

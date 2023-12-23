@@ -33,7 +33,13 @@ const EnquiryUserSchema = new Schema({
     type: String,
     required: true,
   },
+  created: {
+    type: Date,
+    default: Date.now,
+  },
 });
+
+EnquiryUserSchema.index({ created: -1 }); // For fast sorting
 
 const EnquiryUser =
   models?.EnquiryUser || model("EnquiryUser", EnquiryUserSchema);
