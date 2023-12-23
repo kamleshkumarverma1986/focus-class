@@ -3,7 +3,7 @@ export default function sitemap() {
     {
       url: "https://www.focusclass.in",
       lastModified: new Date(),
-      changeFrequency: "monthly",
+      changeFrequency: "yearly",
       priority: 1,
     },
   ];
