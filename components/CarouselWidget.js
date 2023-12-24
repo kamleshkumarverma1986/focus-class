@@ -15,6 +15,8 @@ export default function CarouselWidget({ imageList = [], autoPlay = true }) {
           infiniteLoop
           interval={3000}
           showThumbs={false}
+          dynamicHeight={true}
+          animationHandler={"fade"}
         >
           {imageList.map((img) => {
             return (

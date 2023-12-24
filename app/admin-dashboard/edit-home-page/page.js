@@ -205,7 +205,6 @@ export default function EditHomePage() {
       >
         <Button
           onClick={() => router.back()}
-          loading={isHomePageSaving}
           size="large"
           variant="contained"
           sx={{ mr: "10px" }}

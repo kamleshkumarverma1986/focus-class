@@ -14,7 +14,7 @@ export default function ShowMedia({ mediaType, url, style = {} }) {
           style={styleObj}
         />
       ) : (
-        <video autoPlay={true} muted style={styleObj}>
+        <video autoPlay={true} muted loop style={styleObj}>
           <source src={url} />
         </video>
       )}
