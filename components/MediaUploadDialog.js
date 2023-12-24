@@ -39,26 +39,6 @@ export default function MediaUploadDialog({ imageList = [], onDelete, onAdd }) {
         />
       </Paper>
       <ImageList variant="masonry" cols={3} gap={12}>
-        {imageList.map((img) => (
-          <ImageListItem key={img.asset_id}>
-            <ShowMedia media={img} />
-            <ImageListItemBar
-              sx={{ position: "relative", bottom: "7px" }}
-              actionIcon={
-                <Box sx={{ display: "flex" }}>
-                  <Tooltip title="Delete this image">
-                    <IconButton
-                      aria-label={`Delete this image`}
-                      onClick={() => onDelete(img.asset_id)}
-                    >
-                      <DeleteForeverOutlinedIcon />
-                    </IconButton>
-                  </Tooltip>
-                </Box>
-              }
-            />
-          </ImageListItem>
-        ))}
         {loadingImageList.map((file, index) => (
           <ImageListItem key={index}>
             <ShowMedia
@@ -75,6 +55,26 @@ export default function MediaUploadDialog({ imageList = [], onDelete, onAdd }) {
               actionIcon={
                 <Box>
                   <CircularProgress />
+                </Box>
+              }
+            />
+          </ImageListItem>
+        ))}
+        {imageList.map((img) => (
+          <ImageListItem key={img.asset_id}>
+            <ShowMedia media={img} />
+            <ImageListItemBar
+              sx={{ position: "relative", bottom: "7px" }}
+              actionIcon={
+                <Box sx={{ display: "flex" }}>
+                  <Tooltip title="Delete this image">
+                    <IconButton
+                      aria-label={`Delete this image`}
+                      onClick={() => onDelete(img.asset_id)}
+                    >
+                      <DeleteForeverOutlinedIcon />
+                    </IconButton>
+                  </Tooltip>
                 </Box>
               }
             />

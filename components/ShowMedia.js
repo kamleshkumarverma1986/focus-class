@@ -1,8 +1,14 @@
 import Image from "next/image";
 
 export default function ShowMedia({ media, style = {} }) {
-  const styleObj = { width: "100%", height: "auto", ...style };
   const { resource_type, url, secure_url } = media;
+  const styleObj = {
+    width: "100%",
+    height: "auto",
+    objectFit: resource_type === "image" ? "fill" : "cover",
+    maxHeight: "600px",
+    ...style,
+  };
   const src = process.env.NODE_ENV === "development" ? url : secure_url;
 
   return (

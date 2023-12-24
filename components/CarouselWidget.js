@@ -11,9 +11,9 @@ export default function CarouselWidget({ imageList = [], autoPlay = true }) {
     <>
       {!!imageList.length ? (
         <Carousel
-          autoPlay={autoPlay}
+          autoPlay={true}
           infiniteLoop
-          interval={3000}
+          interval={6000}
           showThumbs={false}
           dynamicHeight={true}
           animationHandler={"fade"}

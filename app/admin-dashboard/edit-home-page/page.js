@@ -95,7 +95,7 @@ export default function EditHomePage() {
   const onAddMediaHandler = (uploadedImages) => {
     const tempCurrentMediaSet = {
       ...currentMediaSet,
-      imageList: [...currentMediaSet.imageList, ...uploadedImages],
+      imageList: [...uploadedImages, ...currentMediaSet.imageList],
     };
     setCurrentMediaSet(tempCurrentMediaSet);
     updateHomePage(tempCurrentMediaSet);
