@@ -41,7 +41,7 @@ export default function MediaUploadDialog({ imageList = [], onDelete, onAdd }) {
       <ImageList variant="masonry" cols={3} gap={12}>
         {imageList.map((img) => (
           <ImageListItem key={img.asset_id}>
-            <ShowMedia mediaType={img.resource_type} url={img.url} />
+            <ShowMedia media={img} />
             <ImageListItemBar
               sx={{ position: "relative", bottom: "7px" }}
               actionIcon={
@@ -62,8 +62,11 @@ export default function MediaUploadDialog({ imageList = [], onDelete, onAdd }) {
         {loadingImageList.map((file, index) => (
           <ImageListItem key={index}>
             <ShowMedia
-              mediaType={getFileType(file)}
-              url={URL.createObjectURL(file)}
+              media={{
+                resource_type: getFileType(file),
+                url: URL.createObjectURL(file),
+                secure_url: URL.createObjectURL(file),
+              }}
             />
             <ImageListItemBar
               title="Loading..."

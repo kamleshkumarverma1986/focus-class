@@ -21,7 +21,7 @@ export default function CarouselWidget({ imageList = [], autoPlay = true }) {
           {imageList.map((img) => {
             return (
               <div style={{ height: "100%" }} key={img.asset_id}>
-                <ShowMedia mediaType={img.resource_type} url={img.url} />
+                <ShowMedia media={img} />
               </div>
             );
           })}

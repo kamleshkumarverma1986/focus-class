@@ -20,7 +20,7 @@ export default function Gallery({ imageList = [] }) {
         <ImageList variant="masonry" cols={matchDownMd ? 1 : 3} gap={8}>
           {imageList.map((img) => (
             <ImageListItem key={img.asset_id}>
-              <ShowMedia mediaType={img.resource_type} url={img.url} />
+              <ShowMedia media={img} />
             </ImageListItem>
           ))}
         </ImageList>

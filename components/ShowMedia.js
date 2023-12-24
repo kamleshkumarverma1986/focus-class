@@ -1,12 +1,15 @@
 import Image from "next/image";
 
-export default function ShowMedia({ mediaType, url, style = {} }) {
+export default function ShowMedia({ media, style = {} }) {
   const styleObj = { width: "100%", height: "auto", ...style };
+  const { resource_type, url, secure_url } = media;
+  const src = process.env.NODE_ENV === "development" ? url : secure_url;
+
   return (
     <>
-      {mediaType === "image" ? (
+      {resource_type === "image" ? (
         <Image
-          src={url}
+          src={src}
           alt="mediaUploadDialogImg"
           sizes="100vw"
           height={0}
@@ -15,7 +18,7 @@ export default function ShowMedia({ mediaType, url, style = {} }) {
         />
       ) : (
         <video autoPlay={true} muted loop style={styleObj}>
-          <source src={url} />
+          <source src={src} />
         </video>
       )}
     </>

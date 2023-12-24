@@ -7,11 +7,7 @@ export default function CardWidget({ media }) {
   return (
     <Card sx={{ maxWidth: 345, m: 2 }}>
       <CardActionArea>
-        <ShowMedia
-          mediaType={media.resource_type}
-          url={media.url}
-          style={{ height: 200 }}
-        />
+        <ShowMedia media={media} style={{ height: 200 }} />
       </CardActionArea>
     </Card>
   );
