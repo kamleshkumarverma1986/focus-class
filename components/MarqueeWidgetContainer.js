@@ -10,7 +10,7 @@ export default function MarqueeWidgetContainer({ imageList }) {
         <MarqueeWidget>
           <Box sx={{ display: "flex" }}>
             {imageList.map((img) => {
-              return <MarqueeCard key={img.asset_id} imgSrc={img.url} />;
+              return <MarqueeCard key={img.asset_id} media={img} />;
             })}
           </Box>
         </MarqueeWidget>

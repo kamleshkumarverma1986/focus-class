@@ -4,12 +4,9 @@ import { Carousel } from "react-responsive-carousel";
 import Image from "next/image";
 import NoImageWidget from "./NoImageWidget";
 import SectionTitle from "./SectionTitle";
+import ShowMedia from "./ShowMedia";
 
-export default function CarouselWidget({
-  imageList = [],
-  style = { width: "100%", height: "100%" },
-  autoPlay = true,
-}) {
+export default function CarouselWidget({ imageList = [], autoPlay = true }) {
   return (
     <>
       {!!imageList.length ? (
@@ -22,14 +19,7 @@ export default function CarouselWidget({
           {imageList.map((img) => {
             return (
               <div style={{ height: "100%" }} key={img.asset_id}>
-                <Image
-                  src={img.url}
-                  alt="poster"
-                  width={0}
-                  height={0}
-                  sizes="100vw"
-                  style={style}
-                />
+                <ShowMedia mediaType={img.resource_type} url={img.url} />
               </div>
             );
           })}

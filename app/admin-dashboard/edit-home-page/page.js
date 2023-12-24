@@ -107,10 +107,7 @@ export default function EditHomePage() {
         imageListName="carouselImageList"
         onUpload={mediaEditClickHandler}
       >
-        <CarouselWidget
-          imageList={homePage.carouselImageList}
-          autoPlay={false}
-        />
+        <CarouselWidget imageList={homePage.carouselImageList} />
       </MediaEditContainer>
 
       <WidgetContainer>

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { getFileType } from "@/utils/helper";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -17,11 +18,10 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-const uploadImageOnCloud = async (imageData, fileType) => {
+const uploadImageOnCloud = async (imageData, file) => {
+  const fileType = getFileType(file);
   const res = await fetch(
-    `https://api.cloudinary.com/v1_1/${
-      process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
-    }/${fileType.includes("image") ? "image" : "video"}/upload`,
+    `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/${fileType}/upload`,
     {
       method: "POST",
       body: imageData,
@@ -53,7 +53,7 @@ export default function MediaUpload({
           "cloud_name",
           process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
         );
-        allImagePromises.push(uploadImageOnCloud(imageData, file.type));
+        allImagePromises.push(uploadImageOnCloud(imageData, file));
       });
       const medias = await Promise.all(allImagePromises);
       const mainMedia = medias.map((media) => {

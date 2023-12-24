@@ -1,6 +1,8 @@
 export const sendSMS = async ({ otp, mobileNumbers }) => {
   try {
-    const url = `https://www.fast2sms.com/dev/bulkV2?authorization=${process.env.FAST2SMS_API_KEY}&variables_values=${otp}&route=otp&numbers=${mobileNumbers.join(",")}`;
+    const url = `https://www.fast2sms.com/dev/bulkV2?authorization=${
+      process.env.FAST2SMS_API_KEY
+    }&variables_values=${otp}&route=otp&numbers=${mobileNumbers.join(",")}`;
     await fetch(url);
   } catch (error) {
     console.error({
@@ -25,4 +27,8 @@ export const invalidateOTP = (userObj) => {
     userObj.otp.isExpire = true;
     userObj.save();
   }, Number(process.env.OTP_LIFETIME));
-}
+};
+
+export const getFileType = (file) => {
+  return file?.type.includes("image") ? "image" : "video";
+};

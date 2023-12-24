@@ -4,13 +4,14 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import ImageList from "@mui/material/ImageList";
 import ImageListItem from "@mui/material/ImageListItem";
-import Image from "next/image";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 import IconButton from "@mui/material/IconButton";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import { Paper, Tooltip } from "@mui/material";
 import MediaUpload from "./MediaUpload";
 import CircularProgress from "@mui/material/CircularProgress";
+import ShowMedia from "./ShowMedia";
+import { getFileType } from "@/utils/helper";
 
 export default function MediaUploadDialog({ imageList = [], onDelete, onAdd }) {
   const [loadingImageList, setLoadingImageList] = React.useState([]);
@@ -40,17 +41,7 @@ export default function MediaUploadDialog({ imageList = [], onDelete, onAdd }) {
       <ImageList variant="masonry" cols={3} gap={12}>
         {imageList.map((img) => (
           <ImageListItem key={img.asset_id}>
-            <Image
-              src={img.url}
-              alt="mediaUploadDialogImg"
-              sizes="100vw"
-              height={500}
-              width={0}
-              style={{
-                width: "100%",
-                height: "auto",
-              }}
-            />
+            <ShowMedia mediaType={img.resource_type} url={img.url} />
             <ImageListItemBar
               sx={{ position: "relative", bottom: "7px" }}
               actionIcon={
@@ -70,16 +61,9 @@ export default function MediaUploadDialog({ imageList = [], onDelete, onAdd }) {
         ))}
         {loadingImageList.map((file, index) => (
           <ImageListItem key={index}>
-            <Image
-              src={URL.createObjectURL(file)}
-              alt="mediaUploadDialogImg"
-              sizes="100vw"
-              height={500}
-              width={0}
-              style={{
-                width: "100%",
-                height: "auto",
-              }}
+            <ShowMedia
+              mediaType={getFileType(file)}
+              url={URL.createObjectURL(file)}
             />
             <ImageListItemBar
               title="Loading..."

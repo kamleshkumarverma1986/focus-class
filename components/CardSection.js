@@ -18,7 +18,7 @@ export default function CardSection({ title, imageList = [] }) {
           }}
         >
           {imageList.map((img) => {
-            return <CardWidget key={img.asset_id} imgSrc={img.url} />;
+            return <CardWidget key={img.asset_id} media={img} />;
           })}
         </Box>
       ) : (
